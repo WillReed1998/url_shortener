@@ -1,0 +1,11 @@
+rootProject.name = 'url_shortener'
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create('libs') {
+            version 'shadow', '8.1.1'
+            version 'dependencyManagement', '1.1.4'
+            version 'springBoot', '3.2.1'
+        }
+    }
+}

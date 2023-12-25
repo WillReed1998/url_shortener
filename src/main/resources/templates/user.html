@@ -13,6 +13,10 @@
 .table th:nth-child(3) {
   width: 260px;
 }
+.bottom-dark-bar {
+  background-color: #333;
+  color: #fff;
+}
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand ms-2" href="main.html">URL Shortener</a>
@@ -51,38 +55,51 @@
 
 <div class="container mt-5">
   <h1>Hello, [User Name]!</h1>
-  <p>Your list of URLs:</p>
 
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">Short URL</th>
-        <th scope="col">Long URL</th>
-        <th scope="col">Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <!-- Replace this section with actual data from the user's URL list -->
-      <tr>
-        <td>shorturl1</td>
-        <td>https://www.longurl1.com</td>
-        <td>
-          <button type="button" class="btn btn btn-outline-secondary">Copy short URL</button>
-          <button type="button" class="btn btn btn-outline-secondary">Go to stats</button>
-        </td>
-      </tr>
-      <tr>
-        <td>shorturl2</td>
-        <td>https://www.longurl2.com</td>
-        <td>
-          <button type="button" class="btn btn-outline-secondary">Copy short URL</button>
-          <button type="button" class="btn btn-outline-secondary">Go to stats</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="mt-3">
+    <h3>Create new URL</h3>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Enter long URL" id="inputLongURL">
+      <button class="btn btn-outline-secondary"  onclick="createShortURL()">Make it short</button>
+    </div>
+    <p>New Short URL:</p>
+    <input type="text" class="form-control" id="outputShortURL" readonly>
   </div>
+
+<div class="table-responsive mt-3">
+  <table class="table table-striped">
+    <h3>Your list of URLs:</h3>
+    <thead>
+    <tr>
+      <th scope="col">Short URL</th>
+      <th scope="col">Long URL</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Replace this section with actual data from the user's URL list -->
+    <tr>
+      <td>shorturl1</td>
+      <td>https://www.longurl1.com</td>
+      <td>
+        <button type="button" class="btn btn btn-outline-secondary">Copy short URL</button>
+        <button type="button" class="btn btn btn-outline-secondary">Go to stats</button>
+      </td>
+    </tr>
+    <tr>
+      <td>shorturl2</td>
+      <td>https://www.longurl2.com</td>
+      <td>
+        <button type="button" class="btn btn-outline-secondary">Copy short URL</button>
+        <button type="button" class="btn btn-outline-secondary">Go to stats</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="fixed-bottom p-3 bottom-dark-bar">
 </div>
 
 

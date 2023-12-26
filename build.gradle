@@ -29,6 +29,10 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.springframework.session:spring-session-core'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'

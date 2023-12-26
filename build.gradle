@@ -33,6 +33,8 @@ dependencies {
 
     // jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    // docs
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'

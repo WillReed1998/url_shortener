@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.springframework.session:spring-session-core'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
 
     // jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'

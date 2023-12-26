@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@Builder
 @Entity
 @Table(name = "urls")
 public class Url {
@@ -34,11 +33,9 @@ public class Url {
     private String shortUrl;
 
     @Column(name = "create_at")
-    //@Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "end_at")
-    //@Builder.Default
     private LocalDateTime endAt = LocalDateTime.now().plusDays(30);
 
     @Column(name = "click_count")

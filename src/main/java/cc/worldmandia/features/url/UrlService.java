@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UrlService {
+
     private final UrlRepository urlRepository;
 
     public void add(UrlDto urlDto){

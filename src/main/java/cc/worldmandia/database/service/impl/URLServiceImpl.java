@@ -35,4 +35,8 @@ public class URLServiceImpl implements URLService {
         urlRepository.deleteById(id);
     }
 
+    public URL findURLWithUsersByShortURL(String shortURL) {
+        return urlRepository.findURLWithUsersByShortURL(shortURL).orElse(null);
+    }
+
 }

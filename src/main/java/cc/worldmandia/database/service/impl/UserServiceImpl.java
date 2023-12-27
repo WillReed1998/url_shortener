@@ -34,4 +34,8 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    public User findUserWithURLsByUsername(String username) {
+        return userRepository.findUserWithURLsByUsername(username).orElse(null);
+    }
+
 }

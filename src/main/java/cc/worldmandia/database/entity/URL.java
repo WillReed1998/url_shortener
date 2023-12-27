@@ -8,8 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "urls")
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package cc.worldmandia.features.url;
+package cc.worldmandia.UrlShortener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -10,5 +10,7 @@ public class USSpringApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(USSpringApplication.class, args);
+
+
     }
 }

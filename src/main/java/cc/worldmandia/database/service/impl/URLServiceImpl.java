@@ -7,6 +7,9 @@ import cc.worldmandia.database.service.URLService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -17,6 +20,13 @@ public class URLServiceImpl implements URLService {
 
     @Override
     public URL save(URL url) {
+        url.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
+        url.setClickCount(0);
+        url.setShortUrl("shortUrl");
+        url.setEnabled(true);
+
+        Instant endAtInstant = Instant.now().plus(30, ChronoUnit.DAYS);
+        url.setEndAt(new Timestamp(endAtInstant.toEpochMilli()));
         return urlRepository.save(url);
     }
 

@@ -1,7 +1,7 @@
 package cc.worldmandia.controllers;
 
-import cc.worldmandia.database.entity.URL;
-import cc.worldmandia.database.service.impl.URLServiceImpl;
+import cc.worldmandia.url.URL;
+import cc.worldmandia.url.URLServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/v1/url-shortener")
 public class UrlController {
     private final URLServiceImpl urlService;
-    private String redirectToList = "redirect:/api/v1/url-shortener/list";
+    private final String redirectToList = "redirect:/api/v1/url-shortener/list";
     private String timeUrl;
 
     @GetMapping

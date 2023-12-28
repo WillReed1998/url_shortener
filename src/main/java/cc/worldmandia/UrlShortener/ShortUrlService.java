@@ -1,7 +1,7 @@
 package cc.worldmandia.UrlShortener;
 
-import cc.worldmandia.database.entity.URL;
-import cc.worldmandia.database.repository.URLRepository;
+import cc.worldmandia.url.URL;
+import cc.worldmandia.url.URLRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

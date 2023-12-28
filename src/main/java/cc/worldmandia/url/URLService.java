@@ -1,6 +1,4 @@
-package cc.worldmandia.database.service;
-
-import cc.worldmandia.database.entity.URL;
+package cc.worldmandia.url;
 
 import java.util.List;
 

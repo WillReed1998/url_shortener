@@ -1,9 +1,6 @@
-package cc.worldmandia.database.service.impl;
+package cc.worldmandia.url;
 
 
-import cc.worldmandia.database.entity.URL;
-import cc.worldmandia.database.repository.URLRepository;
-import cc.worldmandia.database.service.URLService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

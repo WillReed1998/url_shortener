@@ -1,8 +1,5 @@
-package cc.worldmandia.database.service.impl;
+package cc.worldmandia.user;
 
-import cc.worldmandia.database.entity.User;
-import cc.worldmandia.database.repository.UserRepository;
-import cc.worldmandia.database.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

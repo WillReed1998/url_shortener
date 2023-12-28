@@ -1,6 +1,4 @@
-package cc.worldmandia.database.service;
-
-import cc.worldmandia.database.entity.User;
+package cc.worldmandia.user;
 
 import java.util.List;
 

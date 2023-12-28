@@ -1,5 +1,6 @@
-package cc.worldmandia.database.entity;
+package cc.worldmandia.user;
 
+import cc.worldmandia.url.URL;
 import jakarta.persistence.*;
 import lombok.*;
 

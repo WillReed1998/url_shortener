@@ -1,6 +1,5 @@
-package cc.worldmandia.database.repository;
+package cc.worldmandia.url;
 
-import cc.worldmandia.database.entity.URL;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

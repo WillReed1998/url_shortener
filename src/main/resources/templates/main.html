@@ -81,14 +81,15 @@
     <h1 class="mt-4 mb text-center">URL Shortener</h1>
     <p class="text-center">Shorten your long URLs with ease!</p>
     <div class="card shadow p-3 mb-5 bg-white rounded">
-        <form id="urlShortenerForm" class="mb-3">
+        <form id="urlShortenerForm" class="mb-3" th:action="@{/api/v1/url-shortener/reklama}" method="POST" target="_blank">
             <div class="mb-3">
-                <label for="originalUrl" class="form-label visually-hidden">Enter your URL:</label>
-                <input type="url" class="form-control" id="originalUrl" name="originalUrl"
+                <label for="shortUrl" class="form-label visually-hidden">Enter your URL:</label>
+                <input type="text" class="form-control" id="shortUrl" name="shortUrl"
                        placeholder="Enter your short URL" required>
             </div>
-            <button type="submit" class="btn btn-outline-secondary btn-lg">Go it</button>
+            <button class="btn btn-outline-secondary btn-lg" type="submit">Go it</button>
         </form>
+
     </div>
     <p class="text-center">Want more out of your link shortener? Edit and track existing short URLs for better
         management, track link analytics. </p>

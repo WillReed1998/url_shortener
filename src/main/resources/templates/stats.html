@@ -62,33 +62,49 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th scope="col">Short URL</th>
+                    <th scope="col">Title URL</th>
                     <th scope="col">Long URL</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">Short URL</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Create Date</th>
+                    <th scope="col">End Date</th>
                     <th scope="col">Click Count</th>
-                    <th scope="col">Creator</th>
+                    <th scope="col">Enabled</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <!-- Replace this section with actual data for URL information -->
-                <tr>
-                    <td>https://www.shorturl1.com</td>
-                    <td>https://www.longgggggggggggggggggggggggggggggggggggggggggggggggggggurl1.com</td>
-                    <td>2023-12-25</td>
-                    <td>10</td>
-                    <td>User123</td>
-                </tr>
-                <tr>
-                    <td>https://www.shorturl2.com</td>
-                    <td>https://www.longgggggggggggggggggggggggggggggggggggggggggggggggggggurl2.com</td>
-                    <td>2023-12-24</td>
-                    <td>15</td>
-                    <td>User456</td>
+                <tr th:each="url: ${urls}">
+                    <td th:text="${url.title}"></td>
+                    <td th:text="${url.fullUrl}"></td>
+                    <td th:text="${url.shortUrl}"></td>
+                    <td th:text="${url.description}"></td>
+                    <td th:text="${url.createdDate}"></td>
+                    <td th:text="${url.endAt}"></td>
+                    <td th:text="${url.clickCount}"></td>
+                    <td th:text="${url.enabled}"></td>
+                    <td>
+                        <form th:action="@{/api/v1/url-shortener/edit}" method="GET">
+                            <input type="hidden" name="id" th:value="${url.id}"/>
+                        <button class="btn btn btn-outline-secondary" type="submit" id="edit">Edit</button>
+                        </form>
+                        <form th:action="@{/api/v1/url-shortener/delete}" method="POST">
+                            <input type="hidden" name="id" th:value="${url.id}"/>
+                        <button class="btn btn btn-outline-secondary" type="submit" id="delete">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+
+    <form th:action="@{/api/v1/url-shortener/create}" method="GET">
+        <button class="btn btn btn-outline-secondary" type="submit" id="create">Create new</button>
+    </form>
+
 </div>
 
 

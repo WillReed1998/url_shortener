@@ -52,9 +52,12 @@
 </nav>
 
 <h1 class="mt-4 mb-4 text-center">Your advertisement could be here.</h1>
+
+<form th:action="@{/api/v1/url-shortener/goToUrl}" method="POST">
 <div class="mb-3 text-center">
-<button type="button" class="btn btn-outline-secondary" _msttexthash="1622140" _msthash="135">Contacts</button>
+<button type="submit" class="btn btn-outline-secondary" >Go to link</button>
 </div>
+</form>
 
 <div class="fixed-bottom p-3 bottom-dark-bar">
 </div>

@@ -18,6 +18,8 @@ CREATE TABLE users
     username     VARCHAR(50) UNIQUE,
     password     VARCHAR(100),
     token        VARCHAR(255) UNIQUE
+
+    //add users' roles as enum
 );
 
 CREATE TABLE users_urls

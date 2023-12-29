@@ -1,7 +1,6 @@
-package cc.worldmandia.controllers;
+package cc.worldmandia.web;
 
-import cc.worldmandia.url.URL;
-import cc.worldmandia.url.URLServiceImpl;
+import cc.worldmandia.url.Url;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +12,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/v1/url-shortener")
 public class UrlController {
-    private final URLServiceImpl urlService;
+    private final UrlServiceImpl urlService;
     private final String redirectToList = "redirect:/api/v1/url-shortener/list";
     private String timeUrl;
 
@@ -31,38 +30,40 @@ public class UrlController {
 
     @PostMapping("/goToUrl")
     public String go() {
+
         System.out.println("timeUrl" + timeUrl);
+        //increment click counter
         return "redirect:" + timeUrl;
     }
 
     @GetMapping("/list")
     public String getUrlList(Model model) {
-        List<URL> urlList = urlService.findAll();
+        List<Url> urlList = urlService.findAll();
         model.addAttribute("urls", urlList);
         return "stats";
     }
 
     @GetMapping("/create")
     public String createUrlPage(Model model) {
-        model.addAttribute("notes", new URL());
+        model.addAttribute("notes", new Url());
         return "newUrl";
     }
 
     @PostMapping("/create")
-    public String createShortUrl(@ModelAttribute URL newUrl) {
+    public String createShortUrl(@ModelAttribute Url newUrl) {
         urlService.save(newUrl);
         return "redirect:/api/v1/url-shortener/list";
     }
 
     @GetMapping("/edit")
     public String editUrl(@RequestParam long id, Model model) {
-        URL searchUrl = urlService.findById(id);
+        Url searchUrl = urlService.findById(id);
         model.addAttribute("url", searchUrl);
         return "editUrl";
     }
 
     @PostMapping("/edit")
-    public String editUrl(@ModelAttribute URL newUrl) {
+    public String editUrl(@ModelAttribute Url newUrl) {
         urlService.save(newUrl);
         return redirectToList;
     }

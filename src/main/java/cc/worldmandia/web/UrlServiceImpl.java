@@ -1,6 +1,8 @@
-package cc.worldmandia.url;
+package cc.worldmandia.web;
 
 
+import cc.worldmandia.url.Url;
+import cc.worldmandia.url.UrlRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +13,12 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class URLServiceImpl implements URLService {
+public class UrlServiceImpl implements UrlService {
 
-    private final URLRepository urlRepository;
+    private final UrlRepository urlRepository;
 
     @Override
-    public URL save(URL url) {
+    public Url save(Url url) {
         url.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
         url.setClickCount(0);
         url.setShortUrl("shortUrl");
@@ -28,12 +30,12 @@ public class URLServiceImpl implements URLService {
     }
 
     @Override
-    public URL findById(Long id) {
+    public Url findById(Long id) {
         return urlRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<URL> findAll() {
+    public List<Url> findAll() {
         return urlRepository.findAll();
     }
 
@@ -42,8 +44,10 @@ public class URLServiceImpl implements URLService {
         urlRepository.deleteById(id);
     }
 
-    public URL findURLWithUsersByShortURL(String shortURL) {
+    public Url findURLWithUsersByShortURL(String shortURL) {
         return urlRepository.findURLWithUsersByShortURL(shortURL).orElse(null);
     }
 
+    //add method to increment click_counter
+    //add method to update "enable" field in urls' entity
 }

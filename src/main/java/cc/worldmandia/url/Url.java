@@ -13,7 +13,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class URL {
+public class Url {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

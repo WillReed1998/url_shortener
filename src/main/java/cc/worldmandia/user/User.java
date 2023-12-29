@@ -1,6 +1,6 @@
 package cc.worldmandia.user;
 
-import cc.worldmandia.url.URL;
+import cc.worldmandia.url.Url;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,6 +32,6 @@ public class User {
     @JoinTable(name = "users_urls",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "url_id"))
-    private Set<URL> urls;
+    private Set<Url> urls;
 
 }

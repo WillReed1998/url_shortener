@@ -4,6 +4,7 @@ import cc.worldmandia.url.Url;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,8 +21,10 @@ public class User {
 
     @Column(name = "display_name")
     private String displayName;
+
     @Column(unique = true)
     private String username;
+
     @Column
     private String password;
 

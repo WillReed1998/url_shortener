@@ -1,5 +1,4 @@
-CREATE TABLE urls
-(
+CREATE TABLE urls(
     id           BIGINT    NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title        VARCHAR(255),
     description  VARCHAR(255),
@@ -11,19 +10,15 @@ CREATE TABLE urls
     full_url     VARCHAR(255)
 );
 
-CREATE TABLE users
-(
+CREATE TABLE users(
     id           BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     display_name VARCHAR(255),
     username     VARCHAR(50) UNIQUE,
     password     VARCHAR(100),
     token        VARCHAR(255) UNIQUE
-
-    //add users' roles as enum
 );
 
-CREATE TABLE users_urls
-(
+CREATE TABLE users_urls(
     user_id BIGINT NOT NULL,
     url_id  BIGINT NOT NULL,
 
@@ -32,3 +27,5 @@ CREATE TABLE users_urls
 
     UNIQUE (user_id, url_id)
 );
+
+

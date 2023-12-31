@@ -19,13 +19,13 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public Url save(Url url) {
-        url.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
+     //   url.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
         url.setClickCount(0);
         url.setShortUrl("shortUrl");
         url.setEnabled(true);
 
-        Instant endAtInstant = Instant.now().plus(30, ChronoUnit.DAYS);
-        url.setEndAt(new Timestamp(endAtInstant.toEpochMilli()));
+      //  Instant endAtInstant = Instant.now().plus(30, ChronoUnit.DAYS);
+     //   url.setEndAt(new Timestamp(endAtInstant.toEpochMilli()));
         return urlRepository.save(url);
     }
 

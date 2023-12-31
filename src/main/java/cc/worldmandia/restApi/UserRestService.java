@@ -22,7 +22,4 @@ public class UserRestService {
         return user.get();
     }
 
-    public void saveUser(User user){
-        repository.save(user);
-    }
 }

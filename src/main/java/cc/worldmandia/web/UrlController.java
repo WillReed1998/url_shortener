@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -72,5 +73,17 @@ public class UrlController {
     public String deleteUrl(@RequestParam long id) {
         urlService.deleteById(id);
         return redirectToList;
+    }
+
+    @GetMapping("/{shortUrl}")
+    public ModelAndView redirectToFullUrl(@PathVariable String shortUrl) {
+        Url url = urlService.findURLWithUsersByShortURL(shortUrl);
+
+        if (url != null) {
+            urlService.incrementClickCount(url.getId());
+            return new ModelAndView("redirect:" + url.getFullUrl());
+        } else {
+            return new ModelAndView("error-page");
+        }
     }
 }

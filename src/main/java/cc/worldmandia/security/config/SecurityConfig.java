@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,7 +23,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
-public class USWebSecurity {
+public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -41,8 +40,9 @@ public class USWebSecurity {
             authorizationRequestMatcher.requestMatchers("/swagger/**").permitAll();
             authorizationRequestMatcher.requestMatchers(PathRequest.toH2Console()).permitAll();
             authorizationRequestMatcher.requestMatchers("/**").permitAll();
-//                    .hasRole("USER");
-        }).formLogin(Customizer.withDefaults());
+        })
+//                .formLogin(Customizer.withDefaults())
+        ;
 
         return http.build();
     }

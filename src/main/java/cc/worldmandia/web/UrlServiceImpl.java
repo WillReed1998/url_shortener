@@ -48,6 +48,8 @@ public class UrlServiceImpl implements UrlService {
         return urlRepository.findURLWithUsersByShortURL(shortURL).orElse(null);
     }
 
-    //add method to increment click_counter
+    public void incrementClickCount(Long id) {
+        urlRepository.incrementClickCountById(id);
+    }
     //add method to update "enable" field in urls' entity
 }

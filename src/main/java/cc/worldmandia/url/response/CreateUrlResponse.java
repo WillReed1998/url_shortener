@@ -1,4 +1,4 @@
-package cc.worldmandia.restApi.response;
+package cc.worldmandia.url.response;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package cc.worldmandia.restApi.response;
+package cc.worldmandia.url.response;
 
 
 import cc.worldmandia.url.Url;

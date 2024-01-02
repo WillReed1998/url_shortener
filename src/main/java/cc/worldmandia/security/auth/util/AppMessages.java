@@ -6,5 +6,4 @@ public class AppMessages {
     public static final String SUCCESS_MESSAGE = "Success";
     public static final String INVALID_CREDENTIALS_MESSAGE = "Invalid username or password";
     public static final String USERNAME_ALREADY_EXISTS_MESSAGE = "Username already exists. Please choose a different username.";
-
 }

@@ -1,11 +1,11 @@
-package cc.worldmandia.restApi;
+package cc.worldmandia.url;
 
-import cc.worldmandia.restApi.request.CreateUrlRequest;
-import cc.worldmandia.restApi.request.UpdateUrlRequest;
-import cc.worldmandia.restApi.response.CreateUrlResponse;
-import cc.worldmandia.restApi.response.DeleteUrlResponse;
-import cc.worldmandia.restApi.response.GetUserUrlsResponse;
-import cc.worldmandia.restApi.response.UpdateUrlResponse;
+import cc.worldmandia.url.request.CreateUrlRequest;
+import cc.worldmandia.url.request.UpdateUrlRequest;
+import cc.worldmandia.url.response.CreateUrlResponse;
+import cc.worldmandia.url.response.DeleteUrlResponse;
+import cc.worldmandia.url.response.GetUserUrlsResponse;
+import cc.worldmandia.url.response.UpdateUrlResponse;
 import cc.worldmandia.url.Url;
 import cc.worldmandia.url.UrlRepository;
 import cc.worldmandia.user.User;

@@ -1,4 +1,4 @@
-package cc.worldmandia.security.auth.dao;
+package cc.worldmandia.security.auth.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

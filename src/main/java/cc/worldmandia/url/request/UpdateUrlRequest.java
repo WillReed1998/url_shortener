@@ -1,13 +1,13 @@
-package cc.worldmandia.restApi.request;
+package cc.worldmandia.url.request;
 
 import lombok.Data;
 
 @Data
-public class CreateUrlRequest {
+public class UpdateUrlRequest {
 
+    private Long id;
     private String fullUrl;
     private String shortUrl;
     private String title;
     private String description;
-
 }

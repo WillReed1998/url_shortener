@@ -1,8 +1,8 @@
 package cc.worldmandia.security.auth;
 
-import cc.worldmandia.security.auth.dao.JwtAuthenticationResponse;
-import cc.worldmandia.security.auth.dao.LogInRequest;
-import cc.worldmandia.security.auth.dao.SignUpRequest;
+import cc.worldmandia.security.auth.response.JwtAuthenticationResponse;
+import cc.worldmandia.security.auth.request.LogInRequest;
+import cc.worldmandia.security.auth.request.SignUpRequest;
 import cc.worldmandia.security.auth.util.AppMessages;
 import cc.worldmandia.security.jwt.JwtServiceImpl;
 import cc.worldmandia.user.User;

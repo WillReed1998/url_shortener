@@ -1,4 +1,4 @@
-package cc.worldmandia.restApi;
+package cc.worldmandia.url;
 
 import cc.worldmandia.user.User;
 import cc.worldmandia.user.UserRepository;

@@ -84,14 +84,14 @@ margin-top: 20px;
 <main class="container mt-5">
     <h1>Hello, [User Name]!</h1>
     <h3>Create new short URL</h3>
-    <form th:action="@{/api/v1/url-shortener/create}" method="POST">
+    <form th:action="@{/url-shortener/create}" method="POST">
         <input type="text" class="form-control" placeholder="Enter long URL" name="fullUrl" id="fullUrl">
         <p>Title:</p>
         <input type="text" class="form-control" name="title" id="title">
         <p>Description:</p>
         <input type="text" class="form-control" name="description" id="description">
-        <p>New Short URL:</p>
-        <input type="text" class="form-control" id="outputShortURL" readonly>
+<!--        <p>New Short URL:</p>-->
+<!--        <input type="text" class="form-control" id="outputShortURL" readonly>-->
         <button class="btn btn-outline-secondary" onclick="createShortURL()">Make it short</button>
     </form>
 </main>

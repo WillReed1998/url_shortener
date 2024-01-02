@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/url-shortener")
 public class UrlController {
     private final UrlServiceImpl urlService;
-    private final String redirectToList = "redirect:/api/v1/url-shortener/list";
+    private final String redirectToList = "redirect:/url-shortener/list";
     private String timeUrl;
 
     @GetMapping
@@ -24,14 +24,11 @@ public class UrlController {
     @PostMapping("/reklama")
     public String getAd(@RequestParam ("shortUrl") String shortUrl) {
         timeUrl = shortUrl;
-        System.out.println("timeUrl" + timeUrl);
         return "ad";
     }
 
     @PostMapping("/goToUrl")
     public String go() {
-
-        System.out.println("timeUrl" + timeUrl);
         //increment click counter
         return "redirect:" + timeUrl;
     }
@@ -52,7 +49,7 @@ public class UrlController {
     @PostMapping("/create")
     public String createShortUrl(@ModelAttribute Url newUrl) {
         urlService.save(newUrl);
-        return "redirect:/api/v1/url-shortener/list";
+        return redirectToList;
     }
 
     @GetMapping("/edit")

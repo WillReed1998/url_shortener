@@ -81,7 +81,7 @@ margin-top: 20px;
 
 <main class="container mt-5">
         <h2>Edit URL</h2>
-        <form th:action="@{/api/v1/url-shortener/edit}" method="POST">
+        <form th:action="@{/url-shortener/edit}" method="POST">
             <input type="hidden" name="id" th:value="${url.id}">
             <p>Edit long URL:</p>
             <textarea th:text="${url.fullUrl}" type="text" class="form-control" name="fullUrl" id="fullUrl"></textarea>

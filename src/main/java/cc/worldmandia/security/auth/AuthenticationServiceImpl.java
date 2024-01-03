@@ -30,24 +30,30 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public JwtAuthenticationResponse signup(SignUpRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new JwtAuthenticationResponse(HttpStatus.BAD_REQUEST.value(), AppMessages.USERNAME_ALREADY_EXISTS_MESSAGE, null)).getBody();
+                    .body(new JwtAuthenticationResponse(HttpStatus.BAD_REQUEST.value(),
+                            AppMessages.EMAIL_ALREADY_EXISTS_MESSAGE, null)).getBody();
         }
         if (!isValidPassword(request.getPassword())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new JwtAuthenticationResponse(HttpStatus.BAD_REQUEST.value(), AppMessages.INVALID_PASSWORD_MESSAGE, null)).getBody();
+                    .body(new JwtAuthenticationResponse(HttpStatus.BAD_REQUEST.value(),
+                            AppMessages.INVALID_PASSWORD_MESSAGE, null)).getBody();
         }
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new JwtAuthenticationResponse(HttpStatus.BAD_REQUEST.value(), AppMessages.PASSWORD_MISMATCH_MESSAGE, null)).getBody();
+                    .body(new JwtAuthenticationResponse(HttpStatus.BAD_REQUEST.value(),
+                            AppMessages.PASSWORD_MISMATCH_MESSAGE, null)).getBody();
         }
         User newUser = new User();
+        newUser.setEmail(request.getEmail());
         newUser.setUsername(request.getUsername());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
+
         var jwt = jwtService.generateToken(new CustomUserDetails(newUser));
         newUser.setToken(jwt);
         userRepository.save(newUser);
+
         return JwtAuthenticationResponse.builder()
                 .status(HttpStatus.OK.value())
                 .message(SUCCESS_MESSAGE)
@@ -59,8 +65,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtAuthenticationResponse login(LogInRequest request) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-            var user = customUserDetailsService.loadUserByUsername(request.getUsername());
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+            var user = customUserDetailsService.loadUserByUsername(request.getEmail());
             var jwt = jwtService.generateToken(user);
 
             return ResponseEntity.ok()

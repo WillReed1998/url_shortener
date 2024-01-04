@@ -25,13 +25,21 @@ public class UrlController {
     @PostMapping("/reklama")
     public String getAd(@RequestParam ("shortUrl") String shortUrl) {
         timeUrl = shortUrl;
+        System.out.println(timeUrl);
         return "ad";
     }
 
     @PostMapping("/goToUrl")
     public String go() {
-        //increment click counter
-        return "redirect:" + timeUrl;
+        Url url = urlService.findURLWithUsersByShortURL(timeUrl);
+        System.out.println(url.getFullUrl());
+        if(url.isEnabled())
+
+        if (url != null) {
+            urlService.incrementClickCount(url.getId());
+            return "redirect:" + url.getFullUrl();
+        }
+            return "error-page";
     }
 
     @GetMapping("/list")
@@ -43,13 +51,13 @@ public class UrlController {
 
     @GetMapping("/create")
     public String createUrlPage(Model model) {
-        model.addAttribute("notes", new Url());
+        model.addAttribute("createUrl", new Url());
         return "newUrl";
     }
 
     @PostMapping("/create")
     public String createShortUrl(@ModelAttribute Url newUrl) {
-        urlService.save(newUrl);
+        urlService.createUrl(newUrl);
         return redirectToList;
     }
 
@@ -61,8 +69,8 @@ public class UrlController {
     }
 
     @PostMapping("/edit")
-    public String editUrl(@ModelAttribute Url newUrl) {
-        urlService.save(newUrl);
+    public String editUrl(@ModelAttribute Url editUrl) {
+        urlService.updateTitleOrDescription(editUrl);
         return redirectToList;
     }
 
@@ -72,17 +80,17 @@ public class UrlController {
         return redirectToList;
     }
 
-    @GetMapping("/{shortUrl}")
-    public ModelAndView redirectToFullUrl(@PathVariable String shortUrl) {
-        Url url = urlService.findURLWithUsersByShortURL(shortUrl);
-
-        if (url != null) {
-            urlService.incrementClickCount(url.getId());
-            return new ModelAndView("redirect:" + url.getFullUrl());
-        } else {
-            return new ModelAndView("error-page");
-        }
-    }
+//    @GetMapping("/{shortUrl}")
+//    public ModelAndView redirectToFullUrl(@PathVariable String shortUrl) {
+//        Url url = urlService.findURLWithUsersByShortURL(shortUrl);
+//
+//        if (url != null) {
+//            urlService.incrementClickCount(url.getId());
+//            return new ModelAndView("redirect:" + url.getFullUrl());
+//        } else {
+//            return new ModelAndView("error-page");
+//        }
+//    }
 
     @PostMapping("/checked")
     public String updateEnabledStatus(@ModelAttribute Url url) {

@@ -84,6 +84,7 @@ body {
   top: 2px;
 }
 
+
 </style>
 <header class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand ms-2" href="main.html">URL Shortener</a>
@@ -144,16 +145,14 @@ body {
             <td th:text="${url.createdDate}"></td>
             <td th:text="${url.endAt}"></td>
             <td th:text="${url.clickCount}"></td>
-<!--            <td th:text="${url.enabled}"></td>-->
             <td>
-<!--                <form action="@{/url-shortener/checked}" method="POST">-->
-                    <input type="hidden" name="id" th:value="${url.id}"/>
-                    <label class="toggle">
-                        <input class="toggle-checkbox" type="checkbox" th:checked="${url.enabled}">
-                        <div class="toggle-switch"></div>
-                    </label>
-<!--                    <button type="submit" id="checked">Оновити</button>-->
-<!--                </form>-->
+                <!--                <form action="@{/url-shortener/checked}" method="POST">-->
+                <input type="hidden" name="id" th:value="${url.id}"/>
+                <label class="toggle">
+                    <input class="toggle-checkbox" type="checkbox" th:checked="${url.enabled}">
+                    <div class="toggle-switch"></div>
+                </label>
+                <!--                </form>-->
                 <form th:action="@{/url-shortener/checked}" method="POST">
                     <input type="hidden" name="id" th:value="${url.id}"/>
                     <button class="btn btn btn-outline-secondary" type="submit" id="checked">Checked</button>
@@ -168,10 +167,10 @@ body {
                     <input type="hidden" name="id" th:value="${url.id}"/>
                     <button class="btn btn btn-outline-secondary" type="submit" id="delete">Delete</button>
                 </form>
-                                        <form th:action="@{/url-shortener/prolong}" method="POST">
-                <input type="hidden" name="id" th:value="${url.id}"/>
-                <button class="btn btn btn-outline-secondary" type="submit" id="prolong">Prolong</button>
-                                        </form>
+                <form th:action="@{/url-shortener/prolong}" method="POST">
+                    <input type="hidden" name="id" th:value="${url.id}"/>
+                    <button class="btn btn btn-outline-secondary" type="submit" id="prolong">Prolong</button>
+                </form>
             </td>
         </tr>
         </tbody>

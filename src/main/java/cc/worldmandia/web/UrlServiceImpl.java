@@ -1,7 +1,6 @@
 package cc.worldmandia.web;
 
-
-import cc.worldmandia.UrlShortener.ShortUrlService;
+import cc.worldmandia.UrlShortener.ShortUrlUtil;
 import cc.worldmandia.url.Url;
 import cc.worldmandia.url.UrlRepository;
 import lombok.AllArgsConstructor;
@@ -14,17 +13,12 @@ import java.util.List;
 public class UrlServiceImpl{
 
     private final UrlRepository urlRepository;
-    private final ShortUrlService shortUrlService;
+    private final ShortUrlUtil shortUrlUtil;
 
-    public Url save(Url url) {
-     //   url.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
-        url.setClickCount(0);
-        url.setShortUrl(String.valueOf(shortUrlService.createShortUrl(url)));
-        url.setEnabled(true);
-
-      //  Instant endAtInstant = Instant.now().plus(30, ChronoUnit.DAYS);
-     //   url.setEndAt(new Timestamp(endAtInstant.toEpochMilli()));
-        return urlRepository.save(url);
+    public void createUrl(Url newUrl) {
+            newUrl.setShortUrl(shortUrlUtil.generateUniqueKey());
+            newUrl.setEnabled(true);
+            urlRepository.save(newUrl);
     }
 
     public boolean exists(long id){
@@ -39,8 +33,13 @@ public class UrlServiceImpl{
         return urlRepository.findById(id).orElse(null);
     }
 
-    public void updateTitleOrDescription(Url url) {
-
+    public Url updateTitleOrDescription(Url url) {
+        long id = url.getId();
+        Url foundUrl = findById(id);
+        foundUrl.setTitle(url.getTitle());
+        foundUrl.setDescription(url.getDescription());
+        foundUrl.setFullUrl(url.getFullUrl());
+        return urlRepository.save(foundUrl);
     }
 
     public List<Url> findAll() {
@@ -58,8 +57,6 @@ public class UrlServiceImpl{
     public void incrementClickCount(Long id) {
         urlRepository.incrementClickCountById(id);
     }
-    //add method to update "enable" field in urls' entity
-
 
     public Url updateEnabledStatus(Url url) {
         long id = url.getId();

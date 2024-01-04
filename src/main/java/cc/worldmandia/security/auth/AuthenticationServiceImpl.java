@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import static cc.worldmandia.security.auth.util.AppMessages.SUCCESS_MESSAGE;
 
@@ -23,7 +25,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtServiceImpl jwtService;
     private final AuthenticationManager authenticationManager;
-    private final CustomUserDetailsService customUserDetailsService;
     private final UserRepository userRepository;
 
     public static final int PASSWORD_REQUIRED_LENGTH = 8;
@@ -66,8 +67,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-            var user = customUserDetailsService.loadUserByUsername(request.getEmail());
-            var jwt = jwtService.generateToken(user);
+            var user = userRepository.findByEmail(request.getEmail())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+            var jwt = user.getToken();
 
             return ResponseEntity.ok()
                     .body(JwtAuthenticationResponse.builder()

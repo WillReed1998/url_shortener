@@ -83,4 +83,10 @@ public class UrlController {
             return new ModelAndView("error-page");
         }
     }
+
+    @PostMapping("/checked")
+    public String updateEnabledStatus(@ModelAttribute Url url) {
+        urlService.updateEnabledStatus(url);
+        return redirectToList;
+    }
 }

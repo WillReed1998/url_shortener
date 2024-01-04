@@ -40,10 +40,7 @@ public class SecurityConfig {
             authorizationRequestMatcher.requestMatchers("/swagger/**").permitAll();
             authorizationRequestMatcher.requestMatchers(PathRequest.toH2Console()).permitAll();
             authorizationRequestMatcher.requestMatchers("/**").permitAll();
-        })
-//                .formLogin(Customizer.withDefaults())
-        ;
-
+        });
         return http.build();
     }
 

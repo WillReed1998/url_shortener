@@ -22,6 +22,11 @@ p{
 margin-top: 20px;
 margin-bottom: 20px;
 }
+span.error_message p {
+color: red;
+font-weight: bold;
+}
+
 
 
 </style>
@@ -50,7 +55,7 @@ margin-bottom: 20px;
                 <a class="nav-link" th:href="@{/url-shortener/registration}">Sign in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/toLogin}">Log in</a>
+                <a class="nav-link" th:href="@{/url-shortener/login}">Log in</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/url-shortener/list}">My account</a>
@@ -64,16 +69,17 @@ margin-bottom: 20px;
         <h1 class="mt-4 mb text-center">URL Shortener</h1>
         <p class="text-center">Shorten your long URLs with ease!</p>
         <div class="card shadow p-3 mb-5 bg-white rounded">
-            <form id="urlShortenerForm" class="mb-3" th:action="@{/url-shortener/reklama}" method="POST"
-                  target="_blank">
+            <form id="urlShortenerForm" class="mb-3" th:action="@{/url-shortener/reklama}" method="POST">
                 <div class="mb-3">
                     <label for="shortUrl" class="form-label visually-hidden">Enter your URL:</label>
                     <input type="text" class="form-control" id="shortUrl" name="shortUrl"
                            placeholder="Enter your short URL" required>
                 </div>
+                <span class="error_message">
+                    <p th:if="${errorShortUrl}" th:text="${errorShortUrl}"></p>
+                </span>
                 <button class="btn btn-outline-secondary btn-lg" type="submit">Go it</button>
             </form>
-
         </div>
         <p class="text-center">Want more out of your link shortener? Edit and track existing short URLs for better
             management, track link analytics. </p>
@@ -82,7 +88,7 @@ margin-bottom: 20px;
     <div class="mb-3 text-center">
         <a href="login.html" class="btn btn-outline-secondary btn-lg">Create an account</a>
     </div>
-    <p class="text-center">Already have an account? <a href="login.html">Log in</a></p>
+    <p class="text-center">Already have an account? <a th:href="@{/url-shortener/login}">Log in</a></p>
     </div>
 </main>
 

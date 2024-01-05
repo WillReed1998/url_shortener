@@ -1,13 +1,11 @@
 package cc.worldmandia.url;
 
 import cc.worldmandia.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "urls")
@@ -30,12 +28,10 @@ public class Url {
     @Column(name = "created_date")
     @Builder.Default
     private LocalDateTime createdDate = LocalDateTime.now();
-    //private Timestamp createdDate;
 
     @Column(name = "end_at")
     @Builder.Default
     private LocalDateTime endAt = LocalDateTime.now().plusDays(30);
-    //private Timestamp endAt;
 
     @Column(name = "click_count")
     private int clickCount;
@@ -49,7 +45,9 @@ public class Url {
     @Column(name = "enabled")
     private boolean enabled;
 
-    @ManyToMany(mappedBy = "urls")
-    private Set<User> users;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user")
+    @JsonIgnore
+    private User user;
 
 }

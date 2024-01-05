@@ -6,55 +6,56 @@ import cc.worldmandia.url.response.CreateUrlResponse;
 import cc.worldmandia.url.response.DeleteUrlResponse;
 import cc.worldmandia.url.response.GetUserUrlsResponse;
 import cc.worldmandia.url.response.UpdateUrlResponse;
-import cc.worldmandia.url.Url;
-import cc.worldmandia.url.UrlRepository;
+
 import cc.worldmandia.user.User;
-import cc.worldmandia.user.UserService;
+import cc.worldmandia.user.UserRepository;
+import cc.worldmandia.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.util.*;
+
 
 @Service
 @RequiredArgsConstructor
 public class UrlRestService {
 
     private final UrlRepository urlRepository;
-    private final UserService userService;
+    private final UserServiceImpl userService;
+    private final UserRepository userRepository;
 
     private static final int MAX_TITLE_LENGTH = 255;
     private static final int MAX_DESCRIPTION_LENGTH = 255;
 
-    public CreateUrlResponse create(Long id, CreateUrlRequest request){
+    public CreateUrlResponse create(String email, CreateUrlRequest request){
         Optional<CreateUrlResponse.Error> validationError = validateCreateFields(request);
 
         if (validationError.isPresent()){
             return CreateUrlResponse.failed(validationError.get());
         }
 
-        User user = userService.findById(id);
-
-        Set<User> users = new HashSet<>();
-        users.add(user);
+        User user = userService.findByEmail(email);
 
         Url createUrl = urlRepository.save(Url.builder()
-                .users(users)
+                .user(user)
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .fullUrl(request.getFullUrl())
-             //   .shortUrl()
+                //    .shortUrl()
                 .build());
 
         return  CreateUrlResponse.success(createUrl.getId());
     }
 
-    public GetUserUrlsResponse getUserUrls(Long id){
-        List<Url> userUrls = urlRepository.getUserUrls(id);
-        return GetUserUrlsResponse.success(userUrls);
+
+    public GetUserUrlsResponse getUserUrls(String username){
+        Optional<User> user = userRepository.findByEmail(username);
+
+        List<Url> urls = urlRepository.getUserUrls(user.get().getId());
+        return GetUserUrlsResponse.success(urls);
     }
 
-    public UpdateUrlResponse update(Long id, UpdateUrlRequest request){
+    public UpdateUrlResponse update(String username, UpdateUrlRequest request){
         Optional<Url> optionalUrl = urlRepository.findById(request.getId());
 
         if (optionalUrl.isEmpty()){
@@ -62,7 +63,7 @@ public class UrlRestService {
         }
 
         Url url = optionalUrl.get();
-        boolean isNotUserUrl = isNotUserUrl(id, url);
+        boolean isNotUserUrl = isNotUserUrl(username, url);
 
         if (isNotUserUrl) {
             return UpdateUrlResponse.failed(UpdateUrlResponse.Error.insufficientPrivileges);
@@ -84,7 +85,7 @@ public class UrlRestService {
         return  UpdateUrlResponse.success(url);
     }
 
-    public DeleteUrlResponse delete(Long idUser, Long idUrl){
+    public DeleteUrlResponse delete(String username, Long idUrl){
         Optional<Url> optionalUrl = urlRepository.findById(idUrl);
 
         if (optionalUrl.isEmpty()){
@@ -92,7 +93,7 @@ public class UrlRestService {
         }
 
         Url url = optionalUrl.get();
-        boolean isNotUserUrl = isNotUserUrl(idUser, url);
+        boolean isNotUserUrl = isNotUserUrl(username, url);
 
         if (isNotUserUrl){
             return DeleteUrlResponse.failed(DeleteUrlResponse.Error.insufficientPrivileges);
@@ -115,7 +116,6 @@ public class UrlRestService {
         return Optional.empty();
     }
 
-    //validateUpdateFields
     private Optional<UpdateUrlResponse.Error> validateUpdateFields(UpdateUrlRequest request){
         if (Objects.nonNull(request.getTitle()) && request.getTitle().length() > MAX_TITLE_LENGTH) {
             return Optional.of(UpdateUrlResponse.Error.invalidTitleLength);
@@ -129,8 +129,8 @@ public class UrlRestService {
     }
 
 
-    private boolean isNotUserUrl(Long userId, Url url){
-        return !url.getUsers().stream().findAny().get().getId().equals(userId);
+    private boolean isNotUserUrl(String username, Url url){
+        return !url.getUser().getEmail().equals(username);
     }
 
 }

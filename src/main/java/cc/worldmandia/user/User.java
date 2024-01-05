@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -31,10 +30,7 @@ public class User {
     @Column(unique = true)
     private String token;
 
-    @ManyToMany
-    @JoinTable(name = "users_urls",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "url_id"))
-    private Set<Url> urls;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Url> urls;
 
 }

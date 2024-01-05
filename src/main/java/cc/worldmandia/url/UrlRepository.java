@@ -13,24 +13,17 @@ import java.util.Optional;
 @Repository
 public interface UrlRepository extends JpaRepository<Url, Long> {
 
-    @Query("SELECT u FROM Url u JOIN FETCH u.users WHERE u.shortUrl = :shortURL")
+    //@Query("SELECT u FROM Url u JOIN FETCH u.users WHERE u.shortUrl = :shortURL")
+    @Query("SELECT u FROM Url u WHERE u.shortUrl = :shortURL")
     Optional<Url> findURLWithUsersByShortURL(@Param("shortURL") String shortURL);
 
     Url findByFullUrl(String fullUrl);
 
     Url findByShortUrl(String shortUrl);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM urls u WHERE u.id_user = :id")
+    List<Url> getUserUrls(Long id);
 
-    //select *
-    //from test.urls u
-    //join test.users_urls uu  on u.id = uu.url_id
-    //join test.users us on uu.user_id = us.id
-    //where us.id = :userId;
-    //@Query("select * from Url u join u.users us where us.id = :userId")
-    //List<Url> getUserUrls(@Param("userId") Long userId);
-
-    @Query("SELECT u FROM Url u JOIN u.users us WHERE us.id = :userId")
-    List<Url> getUserUrls(Long userId);
 
     @Transactional
     @Modifying

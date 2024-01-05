@@ -3,7 +3,6 @@ package cc.worldmandia.user;
 import cc.worldmandia.url.Url;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.List;
 
 @Entity

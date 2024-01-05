@@ -24,7 +24,6 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM urls u WHERE u.id_user = :id")
     List<Url> getUserUrls(Long id);
 
-
     @Transactional
     @Modifying
     @Query("UPDATE Url u SET u.clickCount = u.clickCount + 1 WHERE u.id = :id")

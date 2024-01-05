@@ -12,9 +12,7 @@ import cc.worldmandia.user.UserRepository;
 import cc.worldmandia.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
-
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +44,6 @@ public class UrlRestService {
 
         return  CreateUrlResponse.success(createUrl.getId());
     }
-
 
     public GetUserUrlsResponse getUserUrls(String username){
         Optional<User> user = userRepository.findByEmail(username);
@@ -127,7 +124,6 @@ public class UrlRestService {
 
         return Optional.empty();
     }
-
 
     private boolean isNotUserUrl(String username, Url url){
         return !url.getUser().getEmail().equals(username);

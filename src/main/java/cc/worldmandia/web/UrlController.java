@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+
+import static cc.worldmandia.web.WebConstants.*;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -30,8 +32,14 @@ public class UrlController {
 
     @PostMapping("/goToUrl")
     public String go() {
-        //increment click counter
-        return "redirect:" + timeUrl;
+        Url url = urlService.findURLWithUsersByShortURL(timeUrl);
+        if(url.isEnabled())
+
+        if (url != null) {
+            urlService.incrementClickCount(url.getId());
+            return "redirect:" + url.getFullUrl();
+        }
+            return "error-page";
     }
 
     @GetMapping("/list")
@@ -43,13 +51,28 @@ public class UrlController {
 
     @GetMapping("/create")
     public String createUrlPage(Model model) {
-        model.addAttribute("notes", new Url());
+        model.addAttribute("createUrl", new Url());
         return "newUrl";
     }
 
     @PostMapping("/create")
-    public String createShortUrl(@ModelAttribute Url newUrl) {
-        urlService.save(newUrl);
+    public String createShortUrl(@RequestParam String fullUrl,
+                                 @RequestParam String title,
+                                 @RequestParam String description,
+                                 @ModelAttribute Url newUrl, Model model) {
+        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH) {
+            model.addAttribute("errorFullUrl", INVALID_URL);
+            return "newUrl";
+        }
+        if(title == null || title.isEmpty() || title.length()>MAX_LENGTH){
+            model.addAttribute("errorTitle", INVALID_TITLE);
+            return "newUrl";
+        }
+        if(description.length()>MAX_LENGTH){
+            model.addAttribute("errorDescription", INVALID_DESCRIPTION);
+            return "newUrl";
+        }
+        urlService.createUrl(newUrl);
         return redirectToList;
     }
 
@@ -61,8 +84,23 @@ public class UrlController {
     }
 
     @PostMapping("/edit")
-    public String editUrl(@ModelAttribute Url newUrl) {
-        urlService.save(newUrl);
+    public String editUrl(@RequestParam String fullUrl,
+                          @RequestParam String title,
+                          @RequestParam String description,
+                          @ModelAttribute Url editUrl, Model model) {
+        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH) {
+            model.addAttribute("errorFullUrl", INVALID_URL);
+            return "editUrl";
+        }
+        if(title == null || title.isEmpty() || title.length()>MAX_LENGTH){
+            model.addAttribute("errorTitle", INVALID_TITLE);
+            return "editUrl";
+        }
+        if(description.length()>MAX_LENGTH){
+            model.addAttribute("errorDescription", INVALID_DESCRIPTION);
+            return "editUrl";
+        }
+        urlService.updateTitleOrDescription(editUrl);
         return redirectToList;
     }
 
@@ -72,15 +110,30 @@ public class UrlController {
         return redirectToList;
     }
 
-    @GetMapping("/{shortUrl}")
-    public ModelAndView redirectToFullUrl(@PathVariable String shortUrl) {
-        Url url = urlService.findURLWithUsersByShortURL(shortUrl);
+    @PostMapping("/checked")
+    public String updateEnabledStatus(@ModelAttribute Url url) {
+        urlService.updateEnabledStatus(url);
+        return redirectToList;
+    }
 
-        if (url != null) {
-            urlService.incrementClickCount(url.getId());
-            return new ModelAndView("redirect:" + url.getFullUrl());
-        } else {
-            return new ModelAndView("error-page");
-        }
+    @PostMapping("/prolong")
+    public String prolongEndDate(@ModelAttribute Url url) {
+        urlService.prolongEndDate(url);
+        return redirectToList;
+    }
+
+    @GetMapping("/toLogin")
+    public String toLogin(){
+        return "login";
+    }
+
+    @GetMapping("/registration")
+    public String logOut(){
+        return "registration";
+    }
+
+    @GetMapping("/toMain")
+    public String toMain(){
+        return "main";
     }
 }

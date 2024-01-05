@@ -1,5 +1,5 @@
-CREATE TABLE urls(
-    id           BIGINT    NOT NULL AUTO_INCREMENT PRIMARY KEY,
+create TABLE urls(
+    id           BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title        VARCHAR(255),
     description  VARCHAR(255),
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -10,20 +10,20 @@ CREATE TABLE urls(
     full_url     VARCHAR(255)
 );
 
-CREATE TABLE users(
+create TABLE users(
     id           BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    display_name VARCHAR(255),
-    username     VARCHAR(50) UNIQUE,
-    password     VARCHAR(100),
+    email VARCHAR(255) UNIQUE,
+    username     VARCHAR(50) NOT NULL,
+    password     VARCHAR(100) NOT NULL,
     token        VARCHAR(255) UNIQUE
 );
 
-CREATE TABLE users_urls(
+create TABLE users_urls(
     user_id BIGINT NOT NULL,
     url_id  BIGINT NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (url_id) REFERENCES urls (id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON delete CASCADE,
+    FOREIGN KEY (url_id) REFERENCES urls (id) ON delete CASCADE,
 
     UNIQUE (user_id, url_id)
 );

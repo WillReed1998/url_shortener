@@ -4,7 +4,6 @@ import cc.worldmandia.security.auth.response.JwtAuthenticationResponse;
 import cc.worldmandia.security.auth.request.LogInRequest;
 import cc.worldmandia.security.auth.request.SignUpRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -23,10 +23,10 @@
     }
 
 </style>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<header class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand ms-2" href="main.html">URL Shortener</a>
-    <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-            data-target="#navbarNav" data-toggle="collapse" type="button">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -55,14 +55,15 @@
             </li>
         </ul>
     </div>
-</nav>
+</header>
 
 <div class="container">
     <h2 class="mt-4 mb-4 text-center">Log in</h2>
     <form class="card-header shadow">
+
         <div class="mb-3">
-            <label class="form-label visually-hidden" for="username">username</label>
-            <input class="form-control" id="username" name="username" placeholder="Username" required type="text">
+            <label class="form-label visually-hidden" for="email">email</label>
+            <input class="form-control" id="email" name="email" placeholder="Email" required type="text">
         </div>
 
         <div class="mb-3">

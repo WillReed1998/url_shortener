@@ -1,4 +1,4 @@
-package cc.worldmandia.UrlShortener;
+package cc.worldmandia.util.UrlShortener;
 
 import lombok.Getter;
 import lombok.Setter;

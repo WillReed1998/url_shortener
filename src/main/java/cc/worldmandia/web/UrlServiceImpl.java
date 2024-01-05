@@ -1,6 +1,6 @@
 package cc.worldmandia.web;
 
-import cc.worldmandia.UrlShortener.ShortUrlUtil;
+import cc.worldmandia.util.UrlShortener.ShortUrlUtil;
 import cc.worldmandia.url.Url;
 import cc.worldmandia.url.UrlRepository;
 import lombok.AllArgsConstructor;

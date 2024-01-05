@@ -1,4 +1,4 @@
-package cc.worldmandia.UrlShortener;
+package cc.worldmandia.util.UrlShortener;
 
 import cc.worldmandia.url.Url;
 import cc.worldmandia.url.UrlRepository;

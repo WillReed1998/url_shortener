@@ -5,11 +5,9 @@ import cc.worldmandia.security.auth.request.LogInRequest;
 import cc.worldmandia.security.auth.request.SignUpRequest;
 import cc.worldmandia.security.auth.response.JwtAuthenticationResponse;
 import cc.worldmandia.url.Url;
-import cc.worldmandia.user.User;
 import cc.worldmandia.user.UserRegisterDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -44,7 +42,7 @@ public class UrlController {
     @PostMapping("/goToUrl")
     public String go() {
         Url url = urlService.findURLWithUsersByShortURL(timeUrl);
-        if(url.isEnabled())
+        //if(url.isEnabled())
 
         if (url != null) {
             urlService.incrementClickCount(url.getId());
@@ -83,7 +81,8 @@ public class UrlController {
             model.addAttribute("errorDescription", INVALID_DESCRIPTION);
             return "newUrl";
         }
-        urlService.createUrl(newUrl);
+        // треба передавати сюди емейл юзера!!!!
+        urlService.createUrl(newUrl, "example1@gmail.com");
         return redirectToList;
     }
 
@@ -133,20 +132,6 @@ public class UrlController {
         return redirectToList;
     }
 
-    @GetMapping("/toLogin")
-    public String toLogin(){
-        return "login";
-    }
-
-    @GetMapping("/registration")
-    public String logOut(){
-        return "registration";
-    }
-
-    @GetMapping("/toMain")
-    public String toMain(){
-        return "main";
-    }
     // registration controller
     @GetMapping("/registration")
     public String redirectToRegistrationForm(Model model){

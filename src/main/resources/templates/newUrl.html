@@ -25,7 +25,10 @@ margin-bottom: 8px;
 .btn{
 margin-top: 20px;
 }
-
+span.error_message p {
+color: red;
+font-weight: bold;
+}
 
 </style>
 <header class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -85,13 +88,20 @@ margin-top: 20px;
     <h1>Hello, [User Name]!</h1>
     <h3>Create new short URL</h3>
     <form th:action="@{/url-shortener/create}" method="POST">
-        <input type="text" class="form-control" placeholder="Enter long URL" name="fullUrl" id="fullUrl">
+        <textarea type="text" class="form-control" placeholder="Enter long URL" name="fullUrl" id="fullUrl"></textarea>
+        <span class="error_message">
+        <p th:if="${errorFullUrl}" th:text="${errorFullUrl}"></p>
+        </span>
         <p>Title:</p>
-        <input type="text" class="form-control" name="title" id="title">
+        <textarea type="text" class="form-control" name="title" id="title"></textarea>
+        <span class="error_message">
+        <p th:if="${errorTitle}" th:text="${errorTitle}"></p>
+        </span>
         <p>Description:</p>
-        <input type="text" class="form-control" name="description" id="description">
-<!--        <p>New Short URL:</p>-->
-<!--        <input type="text" class="form-control" id="outputShortURL" readonly>-->
+        <textarea type="text" class="form-control" name="description" id="description"></textarea>
+        <span class="error_message">
+        <p th:if="${errorDescription}" th:text="${errorDescription}"></p>
+        </span>
         <button class="btn btn-outline-secondary" onclick="createShortURL()">Make it short</button>
     </form>
 </main>

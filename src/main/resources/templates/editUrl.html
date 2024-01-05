@@ -25,6 +25,12 @@ margin-bottom: 8px;
 .btn{
 margin-top: 20px;
 }
+span.error_message p {
+color: red;
+font-weight: bold;
+}
+
+
 
 </style>
 <header class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -80,21 +86,30 @@ margin-top: 20px;
 </header>
 
 <main class="container mt-5">
-        <h2>Edit URL</h2>
-        <form th:action="@{/url-shortener/edit}" method="POST">
-            <input type="hidden" name="id" th:value="${url.id}">
-            <p>Edit long URL:</p>
-            <textarea th:text="${url.fullUrl}" type="text" class="form-control" name="fullUrl" id="fullUrl"></textarea>
-            <p>Title:</p>
-            <textarea th:text="${url.title}" type="text" class="form-control" name="title" id="title"></textarea>
-            <p>Description:</p>
-            <textarea th:text="${url.description}" type="text" class="form-control" name="description"
-                      id="description"></textarea>
-            <p>Short URL:</p>
-            <textarea th:text="${url.shortUrl}" type="text" class="form-control" id="outputShortURL"
-                      readonly></textarea>
-            <button class="btn btn-outline-secondary" onclick="createShortURL()">Edit</button>
-        </form>
+    <h2>Edit URL</h2>
+    <form th:action="@{/url-shortener/edit}" method="POST">
+        <input type="hidden" name="id" th:value="${url.id}">
+        <p>Edit long URL:</p>
+        <textarea th:text="${url.fullUrl}" type="text" class="form-control" name="fullUrl" id="fullUrl"></textarea>
+        <span class="error_message">
+        <p th:if="${errorFullUrl}" th:text="${errorFullUrl}"></p>
+        </span>
+        <p>Title:</p>
+        <textarea th:text="${url.title}" type="text" class="form-control" name="title" id="title"></textarea>
+        <span class="error_message">
+        <p th:if="${errorTitle}" th:text="${errorTitle}"></p>
+        </span>
+        <p>Description:</p>
+        <textarea th:text="${url.description}" type="text" class="form-control" name="description"
+                  id="description"></textarea>
+        <span class="error_message">
+        <p th:if="${errorDescription}" th:text="${errorDescription}"></p>
+        </span>
+        <p>Short URL:</p>
+        <textarea th:text="${url.shortUrl}" type="text" class="form-control" id="outputShortURL"
+                  readonly></textarea>
+        <button class="btn btn-outline-secondary" onclick="createShortURL()">Edit</button>
+    </form>
 </main>
 
 <footer class="fixed-bottom p-3 bottom-dark-bar">

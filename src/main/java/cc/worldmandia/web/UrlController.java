@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+
+import static cc.worldmandia.web.WebConstants.*;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -56,7 +58,22 @@ public class UrlController {
     }
 
     @PostMapping("/create")
-    public String createShortUrl(@ModelAttribute Url newUrl) {
+    public String createShortUrl(@RequestParam String fullUrl,
+                                 @RequestParam String title,
+                                 @RequestParam String description,
+                                 @ModelAttribute Url newUrl, Model model) {
+        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH) {
+            model.addAttribute("errorFullUrl", INVALID_URL);
+            return "newUrl";
+        }
+        if(title == null || title.isEmpty() || title.length()>MAX_LENGTH){
+            model.addAttribute("errorTitle", INVALID_TITLE);
+            return "newUrl";
+        }
+        if(description.length()>MAX_LENGTH){
+            model.addAttribute("errorDescription", INVALID_DESCRIPTION);
+            return "newUrl";
+        }
         urlService.createUrl(newUrl);
         return redirectToList;
     }
@@ -69,7 +86,22 @@ public class UrlController {
     }
 
     @PostMapping("/edit")
-    public String editUrl(@ModelAttribute Url editUrl) {
+    public String editUrl(@RequestParam String fullUrl,
+                          @RequestParam String title,
+                          @RequestParam String description,
+                          @ModelAttribute Url editUrl, Model model) {
+        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH) {
+            model.addAttribute("errorFullUrl", INVALID_URL);
+            return "editUrl";
+        }
+        if(title == null || title.isEmpty() || title.length()>MAX_LENGTH){
+            model.addAttribute("errorTitle", INVALID_TITLE);
+            return "editUrl";
+        }
+        if(description.length()>MAX_LENGTH){
+            model.addAttribute("errorDescription", INVALID_DESCRIPTION);
+            return "editUrl";
+        }
         urlService.updateTitleOrDescription(editUrl);
         return redirectToList;
     }
@@ -79,18 +111,6 @@ public class UrlController {
         urlService.deleteById(id);
         return redirectToList;
     }
-
-//    @GetMapping("/{shortUrl}")
-//    public ModelAndView redirectToFullUrl(@PathVariable String shortUrl) {
-//        Url url = urlService.findURLWithUsersByShortURL(shortUrl);
-//
-//        if (url != null) {
-//            urlService.incrementClickCount(url.getId());
-//            return new ModelAndView("redirect:" + url.getFullUrl());
-//        } else {
-//            return new ModelAndView("error-page");
-//        }
-//    }
 
     @PostMapping("/checked")
     public String updateEnabledStatus(@ModelAttribute Url url) {

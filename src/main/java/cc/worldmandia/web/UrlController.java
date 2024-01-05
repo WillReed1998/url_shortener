@@ -112,6 +112,18 @@ public class UrlController {
         return redirectToList;
     }
 
+    @PostMapping("/checked")
+    public String updateEnabledStatus(@ModelAttribute Url url) {
+        urlService.updateEnabledStatus(url);
+        return redirectToList;
+    }
+
+    @PostMapping("/prolong")
+    public String prolongEndDate(@ModelAttribute Url url) {
+        urlService.prolongEndDate(url);
+        return redirectToList;
+    }
+
     // registration controller
     @GetMapping("/registration")
     public String redirectToRegistrationForm(Model model){

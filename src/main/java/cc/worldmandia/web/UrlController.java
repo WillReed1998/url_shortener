@@ -138,11 +138,6 @@ public class UrlController {
         return "login";
     }
 
-    @GetMapping("/registration")
-    public String logOut(){
-        return "registration";
-    }
-
     @GetMapping("/toMain")
     public String toMain(){
         return "main";

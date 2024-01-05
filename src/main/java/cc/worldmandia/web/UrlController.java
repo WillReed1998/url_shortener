@@ -27,14 +27,12 @@ public class UrlController {
     @PostMapping("/reklama")
     public String getAd(@RequestParam ("shortUrl") String shortUrl) {
         timeUrl = shortUrl;
-        System.out.println(timeUrl);
         return "ad";
     }
 
     @PostMapping("/goToUrl")
     public String go() {
         Url url = urlService.findURLWithUsersByShortURL(timeUrl);
-        System.out.println(url.getFullUrl());
         if(url.isEnabled())
 
         if (url != null) {
@@ -116,5 +114,26 @@ public class UrlController {
     public String updateEnabledStatus(@ModelAttribute Url url) {
         urlService.updateEnabledStatus(url);
         return redirectToList;
+    }
+
+    @PostMapping("/prolong")
+    public String prolongEndDate(@ModelAttribute Url url) {
+        urlService.prolongEndDate(url);
+        return redirectToList;
+    }
+
+    @GetMapping("/toLogin")
+    public String toLogin(){
+        return "login";
+    }
+
+    @GetMapping("/registration")
+    public String logOut(){
+        return "registration";
+    }
+
+    @GetMapping("/toMain")
+    public String toMain(){
+        return "main";
     }
 }

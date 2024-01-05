@@ -6,6 +6,7 @@ import cc.worldmandia.url.UrlRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -66,6 +67,14 @@ public class UrlServiceImpl{
         } else {
             foundUrl.setEnabled(true);
         }
+        return urlRepository.save(foundUrl);
+    }
+
+    public Url prolongEndDate(Url url){
+        long id = url.getId();
+        Url foundUrl = findById(id);
+        LocalDateTime prolongDate = foundUrl.getEndAt().plusDays(15);
+        foundUrl.setEndAt(prolongDate);
         return urlRepository.save(foundUrl);
     }
 }

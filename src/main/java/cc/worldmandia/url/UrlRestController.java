@@ -14,6 +14,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/url_shortener")
 public class UrlRestController {
+
     private final UrlRestService service;
 
     @PostMapping

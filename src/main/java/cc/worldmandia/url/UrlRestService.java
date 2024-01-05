@@ -47,8 +47,8 @@ public class UrlRestService {
 
     public GetUserUrlsResponse getUserUrls(String username){
         Optional<User> user = userRepository.findByEmail(username);
-
         List<Url> urls = urlRepository.getUserUrls(user.get().getId());
+
         return GetUserUrlsResponse.success(urls);
     }
 

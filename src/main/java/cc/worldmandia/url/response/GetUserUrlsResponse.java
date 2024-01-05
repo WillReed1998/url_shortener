@@ -26,4 +26,5 @@ public class GetUserUrlsResponse {
     public static GetUserUrlsResponse failed(){
         return builder().error(Error.failed).userUrls(null).build();
     }
+
 }

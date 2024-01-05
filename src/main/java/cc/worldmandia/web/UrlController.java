@@ -130,7 +130,7 @@ public class UrlController {
         ));
         if(response.getStatusCode().equals(HttpStatus.OK)) {
             model.addAttribute("token", response.getBody().getToken());
-            return "main";
+            return start();
         }
         model.addAttribute("statusCode", response.getStatusCode());
         return "login";

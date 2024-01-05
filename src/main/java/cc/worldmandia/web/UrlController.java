@@ -5,9 +5,11 @@ import cc.worldmandia.security.auth.request.LogInRequest;
 import cc.worldmandia.security.auth.request.SignUpRequest;
 import cc.worldmandia.security.auth.response.JwtAuthenticationResponse;
 import cc.worldmandia.url.Url;
+import cc.worldmandia.user.User;
 import cc.worldmandia.user.UserRegisterDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import java.util.List;
 
 import static cc.worldmandia.web.WebConstants.*;
 
+
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/url-shortener")
@@ -27,7 +30,6 @@ public class UrlController {
     private String timeUrl;
 
     private final AuthenticationRestController authenticationRestController;
-
     @GetMapping
     public String start() {
         return "main";
@@ -42,7 +44,7 @@ public class UrlController {
     @PostMapping("/goToUrl")
     public String go() {
         Url url = urlService.findURLWithUsersByShortURL(timeUrl);
-//        if(url.isEnabled())
+        if(url.isEnabled())
 
         if (url != null) {
             urlService.incrementClickCount(url.getId());
@@ -69,15 +71,15 @@ public class UrlController {
                                  @RequestParam String title,
                                  @RequestParam String description,
                                  @ModelAttribute Url newUrl, Model model) {
-        if (fullUrl == null || fullUrl.isEmpty() || fullUrl.length() > MAX_LENGTH) {
+        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH) {
             model.addAttribute("errorFullUrl", INVALID_URL);
             return "newUrl";
         }
-        if (title == null || title.isEmpty() || title.length() > MAX_LENGTH) {
+        if(title == null || title.isEmpty() || title.length()>MAX_LENGTH){
             model.addAttribute("errorTitle", INVALID_TITLE);
             return "newUrl";
         }
-        if (description.length() > MAX_LENGTH) {
+        if(description.length()>MAX_LENGTH){
             model.addAttribute("errorDescription", INVALID_DESCRIPTION);
             return "newUrl";
         }
@@ -97,15 +99,15 @@ public class UrlController {
                           @RequestParam String title,
                           @RequestParam String description,
                           @ModelAttribute Url editUrl, Model model) {
-        if (fullUrl == null || fullUrl.isEmpty() || fullUrl.length() > MAX_LENGTH) {
+        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH) {
             model.addAttribute("errorFullUrl", INVALID_URL);
             return "editUrl";
         }
-        if (title == null || title.isEmpty() || title.length() > MAX_LENGTH) {
+        if(title == null || title.isEmpty() || title.length()>MAX_LENGTH){
             model.addAttribute("errorTitle", INVALID_TITLE);
             return "editUrl";
         }
-        if (description.length() > MAX_LENGTH) {
+        if(description.length()>MAX_LENGTH){
             model.addAttribute("errorDescription", INVALID_DESCRIPTION);
             return "editUrl";
         }
@@ -131,44 +133,55 @@ public class UrlController {
         return redirectToList;
     }
 
+    @GetMapping("/toLogin")
+    public String toLogin(){
+        return "login";
+    }
+
+    @GetMapping("/registration")
+    public String logOut(){
+        return "registration";
+    }
+
+    @GetMapping("/toMain")
+    public String toMain(){
+        return "main";
+    }
     // registration controller
     @GetMapping("/registration")
-    public String redirectToRegistrationForm(Model model) {
+    public String redirectToRegistrationForm(Model model){
         UserRegisterDto userRegisterDto = new UserRegisterDto();
         model.addAttribute(userRegisterDto);
         return "/registration";
     }
-
     @PostMapping("/registration")
-    public String registeringUser(@ModelAttribute("user") @Valid UserRegisterDto userRegisterDto, Model model) {
-        ResponseEntity<JwtAuthenticationResponse> response = authenticationRestController.signup(new SignUpRequest(
+    public String registeringUser(@ModelAttribute("user")@Valid UserRegisterDto userRegisterDto, Model model){
+        ResponseEntity<JwtAuthenticationResponse> response= authenticationRestController.signup(new SignUpRequest(
                 userRegisterDto.getEmail(),
                 userRegisterDto.getUsername(),
                 userRegisterDto.getPassword(),
                 userRegisterDto.getRepeatedPassword()
         ));
-        if (response.getStatusCode().equals(HttpStatus.OK)) {
+        if(response.getStatusCode().equals(HttpStatus.OK)) {
             model.addAttribute("user", userRegisterDto);
             return "registerSuccess";
         }
         model.addAttribute("statusCode", response.getStatusCode());
         return "/registration";
     }
-
     @GetMapping("/login")
-    public String redirectToLoginForm(Model model) {
+    public String redirectToLoginForm(Model model){
         UserRegisterDto userRegisterDto = new UserRegisterDto();
         model.addAttribute(userRegisterDto);
         return "/login";
     }
-
     @PostMapping("/login")
-    public String login(@ModelAttribute("user") @Valid UserRegisterDto userRegisterDto, Model model) {
-        ResponseEntity<JwtAuthenticationResponse> response = authenticationRestController.login(new LogInRequest(
+    public String login(@ModelAttribute("user")@Valid UserRegisterDto userRegisterDto, Model model){
+        ResponseEntity<JwtAuthenticationResponse> response= authenticationRestController.login(new LogInRequest(
                 userRegisterDto.getEmail(),
                 userRegisterDto.getPassword()
         ));
-        if (response.getStatusCode().equals(HttpStatus.OK)) {
+        if(response.getStatusCode().equals(HttpStatus.OK)) {
             model.addAttribute("token", response.getBody().getToken());
             return start();
         }

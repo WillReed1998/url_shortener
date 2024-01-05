@@ -5,11 +5,9 @@ import cc.worldmandia.security.auth.request.LogInRequest;
 import cc.worldmandia.security.auth.request.SignUpRequest;
 import cc.worldmandia.security.auth.response.JwtAuthenticationResponse;
 import cc.worldmandia.url.Url;
-import cc.worldmandia.user.User;
 import cc.worldmandia.user.UserRegisterDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static cc.worldmandia.web.WebConstants.*;
-
 
 @RequiredArgsConstructor
 @Controller
@@ -115,38 +112,6 @@ public class UrlController {
         return redirectToList;
     }
 
-    @PostMapping("/delete")
-    public String deleteUrl(@RequestParam long id) {
-        urlService.deleteById(id);
-        return redirectToList;
-    }
-
-    @PostMapping("/checked")
-    public String updateEnabledStatus(@ModelAttribute Url url) {
-        urlService.updateEnabledStatus(url);
-        return redirectToList;
-    }
-
-    @PostMapping("/prolong")
-    public String prolongEndDate(@ModelAttribute Url url) {
-        urlService.prolongEndDate(url);
-        return redirectToList;
-    }
-
-    @GetMapping("/toLogin")
-    public String toLogin(){
-        return "login";
-    }
-
-    @GetMapping("/registration")
-    public String logOut(){
-        return "registration";
-    }
-
-    @GetMapping("/toMain")
-    public String toMain(){
-        return "main";
-    }
     // registration controller
     @GetMapping("/registration")
     public String redirectToRegistrationForm(Model model){

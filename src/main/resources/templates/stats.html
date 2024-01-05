@@ -87,7 +87,7 @@ margin-bottom:20px;
 
 </style>
 <header class="fixed-top navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand ms-2" href="main.html">URL Shortener</a>
+    <a class="navbar-brand ms-2" th:href="@{/url-shortener}">URL Shortener</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -105,7 +105,7 @@ margin-bottom:20px;
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/url-shortener/toMain}">Main</a>
+                <a class="nav-link" th:href="@{/url-shortener}">Main</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/url-shortener/registration}">Log out</a>

@@ -148,17 +148,16 @@ margin-bottom:20px;
             <td th:text="${url.clickCount}"></td>
             <td>
                 <!--                <form action="@{/url-shortener/checked}" method="POST">-->
-                <input type="hidden" name="id" th:value="${url.id}"/>
-                <label class="toggle">
-                    <input class="toggle-checkbox" type="checkbox" th:checked="${url.enabled}">
-                    <div class="toggle-switch"></div>
-                </label>
                 <!--                </form>-->
                 <form th:action="@{/url-shortener/checked}" method="POST">
                     <input type="hidden" name="id" th:value="${url.id}"/>
-                    <button class="btn btn btn-outline-secondary" type="submit" id="checked">Checked</button>
+                    <label class="toggle">
+                        <input class="toggle-checkbox" type="checkbox" name="enabled" th:checked="${url.enabled}" onchange="this.form.submit()">
+                        <div class="toggle-switch"></div>
+                    </label>
                 </form>
             </td>
+
             <td>
                 <form th:action="@{/url-shortener/edit}" method="GET">
                     <input type="hidden" name="id" th:value="${url.id}"/>

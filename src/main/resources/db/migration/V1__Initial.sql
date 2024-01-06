@@ -14,7 +14,7 @@ create TABLE urls(
     end_at       TIMESTAMP NULL,
     enabled      BOOLEAN   DEFAULT TRUE,
     click_count  INT       DEFAULT 0,
-    short_url    VARCHAR(10),
+    short_url    VARCHAR(50),
     full_url     VARCHAR(255),
     id_user  BIGINT NOT NULL,
     foreign key (id_user) references users(id)

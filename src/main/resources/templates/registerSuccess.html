@@ -1,24 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User Details</title>
-    <!-- Add your CSS styles or include Bootstrap if needed -->
+    <title>Register success</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f2f2f7;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .table td:nth-child(3),
+        .table th:nth-child(3) {
+            width: 260px;
+        }
+
+        .bottom-dark-bar {
+            background-color: #333;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 60px;
+            text-align: center;
+            text-valign: center;
+        }
+
+        p {
+            font-size: 1.2em;
+            text-align: center;
+            text-valign: center;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <h2 class="mt-4 mb-4 text-center">Your account credentials:</h2>
-    <p>Email: <span th:text="${user.email}"></span></p>
-    <p>Username: <span th:text="${user.username}"></span></p>
-    <p>Password: <span th:text="${user.password}"></span></p>
+<header class="fixed-top navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ms-2" th:href="@{/url-shortener}">URL Shortener</a>
+    <!-- Navigation links... -->
+</header>
 
-    <form th:action="@{login}" method="get">
-        <button type="submit" class="btn btn-primary">Go to Login</button>
-    </form>
-</div>
+<main>
+    <div class="container">
+        <h2 class="mt-4 mb-4 text-center">Your account credentials:</h2>
+        <p>Email: <span th:text="${user.email}"></span></p>
+        <p>Username: <span th:text="${user.username}"></span></p>
+        <p>Password: <span th:text="${user.password}"></span></p>
 
-<!-- Add your scripts or include Bootstrap JS if needed -->
+        <form th:action="@{login}" method="get" class="text-center">
+            <button type="submit" class="btn btn-primary">Go to Login</button>
+        </form>
+    </div>
+</main>
+
+<footer class="fixed-bottom p-3 bottom-dark-bar">
+    <!-- Footer content... -->
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

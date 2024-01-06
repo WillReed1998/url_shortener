@@ -1,5 +1,7 @@
 package cc.worldmandia.web;
 
+import cc.worldmandia.user.User;
+import cc.worldmandia.user.UserServiceImpl;
 import cc.worldmandia.util.UrlShortener.ShortUrlUtil;
 import cc.worldmandia.url.Url;
 import cc.worldmandia.url.UrlRepository;
@@ -15,10 +17,13 @@ public class UrlServiceImpl{
 
     private final UrlRepository urlRepository;
     private final ShortUrlUtil shortUrlUtil;
+    private final UserServiceImpl userService;
 
-    public void createUrl(Url newUrl) {
+    public void createUrl(Url newUrl, String email) {
             newUrl.setShortUrl(shortUrlUtil.generateUniqueKey());
             newUrl.setEnabled(true);
+            User foundUser = userService.findByEmail(email);
+            newUrl.setUser(foundUser);
             urlRepository.save(newUrl);
     }
 

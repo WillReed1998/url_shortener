@@ -139,13 +139,13 @@ margin-bottom:20px;
         </thead>
         <tbody>
         <tr th:each="url: ${urls}">
-            <td th:text="${url.title}"></td>
-            <td th:text="${url.fullUrl}"></td>
-            <td th:text="${url.shortUrl}"></td>
-            <td th:text="${url.description}"></td>
-            <td th:text="${#strings.substring(url.createdDate,0,10)}"></td>
-            <td th:text="${#strings.substring(url.endAt,0,10)}"></td>
-            <td th:text="${url.clickCount}"></td>
+            <td th:text="${url.title}" style="width: 100px;"></td>
+            <td th:text="${url.fullUrl}" style="width: 100px;"></td>
+            <td th:text="${url.shortUrl}" style="width: 100px;"></td>
+            <td th:text="${url.description}" style="width: 100px;"></td>
+            <td th:text="${#strings.substring(url.createdDate,0,10)}" style="width: 100px;"></td>
+            <td th:text="${#strings.substring(url.endAt,0,10)}" style="width: 100px;"></td>
+            <td th:text="${url.clickCount}" style="width: 100px;"></td>
             <td>
                 <!--                <form action="@{/url-shortener/checked}" method="POST">-->
                 <input type="hidden" name="id" th:value="${url.id}"/>

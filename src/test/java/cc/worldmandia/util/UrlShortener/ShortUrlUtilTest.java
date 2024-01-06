@@ -1,15 +1,13 @@
 package cc.worldmandia.util.UrlShortener;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = ShortUrlUtil.class)
+@SpringBootTest
 public class ShortUrlUtilTest {
 
     @MockBean

@@ -1,6 +1,6 @@
 package cc.worldmandia.web;
 
-import cc.worldmandia.security.auth.AuthenticationRestController;
+import cc.worldmandia.security.auth.AuthenticationServiceImpl;
 import cc.worldmandia.security.auth.request.LogInRequest;
 import cc.worldmandia.security.auth.request.SignUpRequest;
 import cc.worldmandia.security.auth.response.JwtAuthenticationResponse;
@@ -25,10 +25,9 @@ import static cc.worldmandia.web.WebConstants.*;
 @RequestMapping("/url-shortener")
 public class UrlController {
     private final UrlServiceImpl urlService;
-    private final String redirectToList = "redirect:/url-shortener/list";
+    private final AuthenticationServiceImpl authenticationService;
     private String timeUrl;
-
-    private final AuthenticationRestController authenticationRestController;
+    private final String redirectToList = "redirect:/url-shortener/list";
     @GetMapping
     public String start() {
         return "main";
@@ -140,17 +139,25 @@ public class UrlController {
     }
     @PostMapping("/registration")
     public String registeringUser(@ModelAttribute("user")@Valid UserRegisterDto userRegisterDto, Model model){
-        ResponseEntity<JwtAuthenticationResponse> response= authenticationRestController.signup(new SignUpRequest(
+
+        JwtAuthenticationResponse response= authenticationService.signup(new SignUpRequest(
                 userRegisterDto.getEmail(),
                 userRegisterDto.getUsername(),
                 userRegisterDto.getPassword(),
                 userRegisterDto.getRepeatedPassword()
         ));
-        if(response.getStatusCode().equals(HttpStatus.OK)) {
+        if(!userRegisterDto.getPassword().equals(userRegisterDto.getRepeatedPassword())){
+            model.addAttribute("userRegisterDto", userRegisterDto);
+            model.addAttribute("statusCode", response.getMessage());
+            return "/registration";
+        }
+        if(response.getStatus() == 200) {
             model.addAttribute("user", userRegisterDto);
             return "registerSuccess";
         }
-        model.addAttribute("statusCode", response.getStatusCode());
+
+        model.addAttribute("statusCode", response.getStatus());
+        model.addAttribute("userRegisterDto", userRegisterDto);
         return "/registration";
     }
     @GetMapping("/login")
@@ -161,15 +168,16 @@ public class UrlController {
     }
     @PostMapping("/login")
     public String login(@ModelAttribute("user")@Valid UserRegisterDto userRegisterDto, Model model){
-        ResponseEntity<JwtAuthenticationResponse> response= authenticationRestController.login(new LogInRequest(
+        JwtAuthenticationResponse response= authenticationService.login(new LogInRequest(
                 userRegisterDto.getEmail(),
                 userRegisterDto.getPassword()
         ));
-        if(response.getStatusCode().equals(HttpStatus.OK)) {
-            model.addAttribute("token", response.getBody().getToken());
+        if(response.getStatus() == 200) {
+            model.addAttribute("token", response.getToken());
             return start();
         }
-        model.addAttribute("statusCode", response.getStatusCode());
+        model.addAttribute("statusCode", response.getMessage());
+        model.addAttribute("userRegisterDto", userRegisterDto);
         return "login";
 
     }

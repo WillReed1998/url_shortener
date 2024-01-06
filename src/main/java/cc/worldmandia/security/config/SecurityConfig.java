@@ -2,7 +2,6 @@ package cc.worldmandia.security.config;
 
 import cc.worldmandia.security.auth.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -29,20 +29,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
-        http.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS));
-        http.authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        http.authorizeHttpRequests(authorizationRequestMatcher -> {
-            authorizationRequestMatcher.requestMatchers("/api/v1/**").permitAll();
-            authorizationRequestMatcher.requestMatchers("/api-docs/**").permitAll();
-            authorizationRequestMatcher.requestMatchers("/swagger/**").permitAll();
-            authorizationRequestMatcher.requestMatchers(PathRequest.toH2Console()).permitAll();
-            authorizationRequestMatcher.requestMatchers("/**").permitAll();
-        });
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
+                .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+                .authenticationProvider(authenticationProvider()).addFilterBefore(
+                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**"),
+                                AntPathRequestMatcher.antMatcher("/url-shortener/**"),
+                                AntPathRequestMatcher.antMatcher("/h2-console/**"))
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -13,7 +13,8 @@ public class CreateUrlResponse {
     public enum Error {
         ok,
         invalidTitle,
-        invalidDescription
+        invalidDescription,
+        invalidUrl
     }
 
     public static CreateUrlResponse success(Long createUrlId){

@@ -7,7 +7,7 @@ public class UpdateUrlRequest {
 
     private Long id;
     private String fullUrl;
-    private String shortUrl;
+    private final String shortUrl;
     private String title;
     private String description;
 }

@@ -6,8 +6,11 @@ import cc.worldmandia.security.auth.request.SignUpRequest;
 import cc.worldmandia.security.auth.response.JwtAuthenticationResponse;
 import cc.worldmandia.url.Url;
 import cc.worldmandia.user.UserRegisterDto;
+import cc.worldmandia.util.UrlValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,13 +42,11 @@ public class UrlController {
     @PostMapping("/goToUrl")
     public String go() {
         Url url = urlService.findURLWithUsersByShortURL(timeUrl);
-        if(url.isEnabled())
-
-        if (url != null) {
+        if(url.isEnabled()){
             urlService.incrementClickCount(url.getId());
             return "redirect:" + url.getFullUrl();
         }
-            return "error-page";
+            return "404";
     }
 
     @GetMapping("/list")
@@ -66,7 +67,7 @@ public class UrlController {
                                  @RequestParam String title,
                                  @RequestParam String description,
                                  @ModelAttribute Url newUrl, Model model) {
-        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH) {
+        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH|| !UrlValidator.validUrl(fullUrl)) {
             model.addAttribute("errorFullUrl", INVALID_URL);
             return "newUrl";
         }
@@ -78,7 +79,8 @@ public class UrlController {
             model.addAttribute("errorDescription", INVALID_DESCRIPTION);
             return "newUrl";
         }
-        urlService.createUrl(newUrl);
+        // треба передавати сюди емейл юзера!!!!
+        urlService.createUrl(newUrl, "example1@gmail.com");
         return redirectToList;
     }
 
@@ -128,15 +130,6 @@ public class UrlController {
         return redirectToList;
     }
 
-    @GetMapping("/toLogin")
-    public String toLogin(){
-        return "login";
-    }
-
-    @GetMapping("/toMain")
-    public String toMain(){
-        return "main";
-    }
     // registration controller
     @GetMapping("/registration")
     public String redirectToRegistrationForm(Model model){

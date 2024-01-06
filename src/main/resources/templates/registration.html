@@ -60,13 +60,13 @@
 <div class="container">
     <h2 class="mt-4 mb-4 text-center">Sign in</h2>
     <p class="text-center"> Welcome to URL Shortener </p>
-    <div  th:if="${statusCode}">
-        <p th:text="'Error code: ' + ${statusCode}"></p>
+    <div  th:if="${statusCode} != null">
+        <p th:text="'Error: ' + ${statusCode}"></p>
     </div>
     <form class="card-header shadow" th:action="@{registration}" method="post" th:object="${userRegisterDto}">
         <div class="mb-3">
             <label class="form-label visually-hidden" for="email">email</label>
-            <input class="form-control" id="email" name="email" placeholder="Email" type="text" th:field="*{email}" required/>
+            <input class="form-control" id="email" name="email" placeholder="Email" required type="text" th:field="*{email}" />
         </div>
         <div class="mb-3">
             <label class="form-label visually-hidden" for="username">username</label>

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -130,6 +131,11 @@ public class UrlController {
         return redirectToList;
     }
 
+    @GetMapping("/{shortUrl}")
+    public RedirectView redirectToFullUrl(@PathVariable String shortUrl) {
+        return urlService.getFullUrl(shortUrl);
+    }
+
     // registration controller
     @GetMapping("/registration")
     public String redirectToRegistrationForm(Model model){
@@ -179,6 +185,5 @@ public class UrlController {
         model.addAttribute("statusCode", response.getMessage());
         model.addAttribute("userRegisterDto", userRegisterDto);
         return "login";
-
     }
 }

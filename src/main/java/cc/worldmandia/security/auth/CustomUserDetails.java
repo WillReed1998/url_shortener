@@ -12,7 +12,7 @@ import java.util.Collections;
 
 @RequiredArgsConstructor
 @Builder
-public class CustomUserDetails implements UserDetails {
+public class  CustomUserDetails implements UserDetails {
 
     private final User user;
 

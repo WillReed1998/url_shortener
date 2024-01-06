@@ -7,6 +7,7 @@ import cc.worldmandia.url.Url;
 import cc.worldmandia.url.UrlRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +21,7 @@ public class UrlServiceImpl{
     private final UserServiceImpl userService;
 
     public void createUrl(Url newUrl, String email) {
-            newUrl.setShortUrl(shortUrlUtil.generateUniqueKey());
+            newUrl.setShortUrl("http://url-shortener/" + shortUrlUtil.generateUniqueKey());
             newUrl.setEnabled(true);
             User foundUser = userService.findByEmail(email);
             newUrl.setUser(foundUser);
@@ -81,5 +82,14 @@ public class UrlServiceImpl{
         LocalDateTime prolongDate = foundUrl.getEndAt().plusDays(15);
         foundUrl.setEndAt(prolongDate);
         return urlRepository.save(foundUrl);
+    }
+
+    public RedirectView getFullUrl(String shortUrl) {
+        Url entity = urlRepository.findByShortUrl(shortUrl);
+        if (entity != null && entity.isEnabled()) {
+            urlRepository.incrementClickCountById(entity.getId());
+            return new RedirectView(entity.getFullUrl());
+        }
+        return new RedirectView("/error");
     }
 }

@@ -1,6 +1,5 @@
 package cc.worldmandia.security.auth;
 
-import cc.worldmandia.USSpringApplication;
 import cc.worldmandia.user.User;
 import cc.worldmandia.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,12 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(classes = USSpringApplication.class)
+@SpringBootTest()
 class CustomUserDetailsServiceTest {
     @Mock
     private UserRepository userRepository;
@@ -25,13 +25,13 @@ class CustomUserDetailsServiceTest {
     private CustomUserDetailsService customUserDetailsService;
     private User user;
     private static final String TEST_EMAIL = "test@example.com";
-    private static final String PASSWORD = "Password1";
+    private static final String TEST_PASSWORD = "Password1";
 
     @BeforeEach
     public void init() {
         user = new User();
         user.setEmail(TEST_EMAIL);
-        user.setPassword(PASSWORD);
+        user.setPassword(TEST_PASSWORD);
 
     }
 
@@ -45,7 +45,7 @@ class CustomUserDetailsServiceTest {
 
         assertNotNull(loadedUserDetails);
         assertEquals(TEST_EMAIL, loadedUserDetails.getUsername());
-        assertEquals(PASSWORD, loadedUserDetails.getPassword());
+        assertEquals(TEST_PASSWORD, loadedUserDetails.getPassword());
 
         verify(userRepository, times(1)).findByEmail(TEST_EMAIL);
     }

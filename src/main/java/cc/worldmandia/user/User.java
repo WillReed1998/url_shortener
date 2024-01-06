@@ -2,6 +2,8 @@ package cc.worldmandia.user;
 
 import cc.worldmandia.url.Url;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import java.util.List;
 
@@ -17,13 +19,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "email", unique = true)
+    @NotNull
+    @NotEmpty
     private String email;
 
     @Column(name = "username", nullable = false)
+    @NotNull
+    @NotEmpty
     private String username;
 
-    @Column(nullable = false)
+    @NotNull
+    @NotEmpty
     private String password;
 
     @Column(unique = true)

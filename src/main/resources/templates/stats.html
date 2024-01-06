@@ -87,7 +87,7 @@ margin-bottom:20px;
 
 </style>
 <header class="fixed-top navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand ms-2" href="main.html">URL Shortener</a>
+    <a class="navbar-brand ms-2" th:href="@{/url-shortener}">URL Shortener</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -105,7 +105,7 @@ margin-bottom:20px;
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/url-shortener/toMain}">Main</a>
+                <a class="nav-link" th:href="@{/url-shortener}">Main</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/url-shortener/registration}">Log out</a>
@@ -114,7 +114,7 @@ margin-bottom:20px;
                 <a class="nav-link" th:href="@{/url-shortener/registration}">Sign in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/toLogin}">Log in</a>
+                <a class="nav-link" th:href="@{/url-shortener/login}">Log in</a>
             </li>
         </ul>
     </div>
@@ -143,8 +143,8 @@ margin-bottom:20px;
             <td th:text="${url.fullUrl}"></td>
             <td th:text="${url.shortUrl}"></td>
             <td th:text="${url.description}"></td>
-            <td th:text="${url.createdDate}"></td>
-            <td th:text="${url.endAt}"></td>
+            <td th:text="${#strings.substring(url.createdDate,0,10)}"></td>
+            <td th:text="${#strings.substring(url.endAt,0,10)}"></td>
             <td th:text="${url.clickCount}"></td>
             <td>
                 <!--                <form action="@{/url-shortener/checked}" method="POST">-->

@@ -28,5 +28,6 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
     @Modifying
     @Query("UPDATE Url u SET u.clickCount = u.clickCount + 1 WHERE u.id = :id")
     void incrementClickCountById(Long id);
+
 }
 

@@ -15,9 +15,10 @@ public class UpdateUrlResponse {
     public enum Error {
         ok,
         insufficientPrivileges,
-        invalidNodeId,
+        invalidUrlId,
         invalidTitleLength,
-        invaliedDescriptionLength
+        invaliedDescriptionLength,
+        invalidUrl
     }
 
     public static UpdateUrlResponse success(Url updateUrl){

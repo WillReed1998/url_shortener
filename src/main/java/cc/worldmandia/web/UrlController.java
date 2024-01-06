@@ -6,6 +6,7 @@ import cc.worldmandia.security.auth.request.SignUpRequest;
 import cc.worldmandia.security.auth.response.JwtAuthenticationResponse;
 import cc.worldmandia.url.Url;
 import cc.worldmandia.user.UserRegisterDto;
+import cc.worldmandia.util.UrlValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,13 +43,11 @@ public class UrlController {
     @PostMapping("/goToUrl")
     public String go() {
         Url url = urlService.findURLWithUsersByShortURL(timeUrl);
-        //if(url.isEnabled())
-
-        if (url != null) {
+        if(url.isEnabled()){
             urlService.incrementClickCount(url.getId());
             return "redirect:" + url.getFullUrl();
         }
-            return "error-page";
+            return "404";
     }
 
     @GetMapping("/list")
@@ -69,7 +68,7 @@ public class UrlController {
                                  @RequestParam String title,
                                  @RequestParam String description,
                                  @ModelAttribute Url newUrl, Model model) {
-        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH) {
+        if(fullUrl == null || fullUrl.isEmpty()||fullUrl.length()> MAX_LENGTH|| !UrlValidator.validUrl(fullUrl)) {
             model.addAttribute("errorFullUrl", INVALID_URL);
             return "newUrl";
         }

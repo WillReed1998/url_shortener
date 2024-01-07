@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class AuthenticationRestController {
+public class AuthenticationController {
     private final AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/signup")

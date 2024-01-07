@@ -52,19 +52,26 @@ class JwtServiceImplTest {
     void testGenerateToken() {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("key1", "value1");
-        String generatedToken = jwtService.generateToken(extraClaims, userDetails);
-        assertNotNull(generatedToken);
+        extraClaims.put("key2", "value2");
+
+        String token = jwtService.generateToken(extraClaims, userDetails);
+
+        assertNotNull(token);
+        assertTrue(jwtService.isTokenValid(token, userDetails));
+        assertEquals(TEST_USERNAME, jwtService.extractUserName(token));
     }
 
     @Test
     void testIsTokenValid() {
-        String expiredToken = TEST_VALID_TOKEN;
-        assertTrue(jwtService.isTokenValid(expiredToken, userDetails));
+        String validToken = jwtService.generateToken(new HashMap<>(), userDetails);
+
+        assertTrue(jwtService.isTokenValid(validToken, userDetails));
     }
 
     @Test
-    void isTokenValid_InvalidToken() {
-        String invalidToken = TEST_INVALID_TOKEN;
-        assertFalse(jwtService.isTokenValid(invalidToken, userDetails));
+    void isTokenNotValid() {
+
+        assertFalse(jwtService.isTokenValid(TEST_INVALID_TOKEN, userDetails));
     }
+
 }

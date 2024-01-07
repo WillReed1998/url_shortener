@@ -24,6 +24,4 @@ public class UserRegisterDto {
     private String password;
     private String repeatedPassword;
 
-
-
 }

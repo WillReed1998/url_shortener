@@ -85,7 +85,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
-    public static boolean isValidPassword(String password) {
+    public boolean isValidPassword(String password) {
         return (password.length() >= PASSWORD_REQUIRED_LENGTH)
                 && (password.replaceAll("\\d", "").length() != password.length())
                 && (!password.toLowerCase().equals(password))

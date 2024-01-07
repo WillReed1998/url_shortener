@@ -2,7 +2,7 @@ package cc.worldmandia.user;
 
 import java.util.List;
 
-public interface UserService {
+public interface  UserService {
 
     User save(User user);
 

@@ -4,8 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UrlValidator {
-    private UrlValidator() {}
-
     public static boolean validUrl(String url) {
         if (url == null) {
             return false;

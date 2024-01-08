@@ -1,5 +1,6 @@
 package cc.worldmandia.url;
 
+import cc.worldmandia.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,7 +24,7 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM urls u WHERE u.id_user = :id")
     List<Url> getUserUrls(Long id);
-
+    List<Url> findAllByUser(User user);
     @Transactional
     @Modifying
     @Query("UPDATE Url u SET u.clickCount = u.clickCount + 1 WHERE u.id = :id")

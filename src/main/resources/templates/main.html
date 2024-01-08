@@ -68,7 +68,7 @@ font-weight: bold;
         <h1 class="mt-4 mb text-center">URL Shortener</h1>
         <p class="text-center">Shorten your long URLs with ease!</p>
         <div class="card shadow p-3 mb-5 bg-white rounded">
-            <form id="urlShortenerForm" class="mb-3" th:action="@{/url-shortener-main/ad}" method="POST">
+            <form id="urlShortenerForm" class="mb-3" th:action="@{/url-shortener-main/ad}" method="POST" target="_blank">
                 <div class="mb-3">
                     <label for="shortUrl" class="form-label visually-hidden">Enter your URL:</label>
                     <input type="text" class="form-control" id="shortUrl" name="shortUrl"
@@ -77,7 +77,7 @@ font-weight: bold;
                 <span class="error_message">
                     <p th:if="${errorShortUrl}" th:text="${errorShortUrl}"></p>
                 </span>
-                <button class="btn btn-outline-secondary btn-lg black-button" type="submit" style="background-color: black; color: white;">Go it</button>
+                <button class="btn btn-outline-secondary btn-lg" type="submit">Go it</button>
             </form>
         </div>
         <p  sec:authorize="isAnonymous()" class="text-center">Want more out of your link shortener? Edit and track existing short URLs for better

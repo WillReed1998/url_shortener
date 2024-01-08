@@ -10,10 +10,12 @@ import cc.worldmandia.user.UserRepository;
 import cc.worldmandia.user.UserServiceImpl;
 import cc.worldmandia.util.UrlShortener.ShortUrlUtil;
 import cc.worldmandia.util.UrlValidator;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
+@Tag(name = "Main methods")
 @Service
 @RequiredArgsConstructor
 public class UrlRestService {

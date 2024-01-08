@@ -70,7 +70,7 @@ font-weight: bold;
     </div>
 </header>
 
-<main class="container mt-5">
+<main class="container mt-5" style="margin-bottom: 100px; margin-top: 100px;">
     <h2>Edit URL</h2>
     <form th:action="@{/url-shortener/edit}" method="POST">
         <input type="hidden" name="id" th:value="${url.id}">

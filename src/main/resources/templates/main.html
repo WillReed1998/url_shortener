@@ -48,7 +48,7 @@ font-weight: bold;
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/logout}">Log out</a>
+                <a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/logout}">Log out</a>
             </li>
             <li class="nav-item">
                 <a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/registration}">Sign in</a>
@@ -57,7 +57,7 @@ font-weight: bold;
                 <a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/login}">Log in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/list}">My account</a>
+                <a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/url-shortener/list}">My account</a>
             </li>
         </ul>
     </div>
@@ -72,7 +72,7 @@ font-weight: bold;
                 <div class="mb-3">
                     <label for="shortUrl" class="form-label visually-hidden">Enter your URL:</label>
                     <input type="text" class="form-control" id="shortUrl" name="shortUrl"
-                           placeholder="Enter your short URL" required>
+                           placeholder="Enter your short URL" required autofocus="autofocus">
                 </div>
                 <span class="error_message">
                     <p th:if="${errorShortUrl}" th:text="${errorShortUrl}"></p>

@@ -108,7 +108,7 @@ margin-bottom:20px;
                 <a class="nav-link" th:href="@{/url-shortener-main}">Main</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/logout}">Log out</a>
+                <a sec:autorize="isAuthorized()" class="nav-link" th:href="@{/logout}">Log out</a>
             </li>
             <li class="nav-item">
                 <a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/registration}">Sign in</a>

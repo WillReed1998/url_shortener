@@ -74,7 +74,7 @@ public class RegistrationController {
             model.addAttribute("token", response.getToken());
             Cookie tokenCookie = cookieService.createCookie("token", response.getToken());
             httpResponse.addCookie(tokenCookie);
-            return start();
+            return "redirect:/url-shortener-main";
         }
         model.addAttribute("statusCode", response.getMessage());
         model.addAttribute("userRegisterDto", userRegisterDto);

@@ -52,7 +52,9 @@ public class UrlServiceImpl{
     public List<Url> findAll() {
         return urlRepository.findAll();
     }
-
+    public List<Url> findAllByUser(User user) {
+        return urlRepository.findAllByUser(user);
+    }
     public void deleteById(Long id) {
         urlRepository.deleteById(id);
     }

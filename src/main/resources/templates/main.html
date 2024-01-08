@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Main</title>
@@ -28,10 +28,9 @@ font-weight: bold;
 }
 
 
-
 </style>
 <header class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand ms-2" th:href="@{/url-shortener}">URL Shortener</a>
+    <a class="navbar-brand ms-2" th:href="@{/url-shortener-main}">URL Shortener</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -49,13 +48,13 @@ font-weight: bold;
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/registration}">Log out</a>
+                <a class="nav-link" th:href="@{/logout}">Log out</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/registration}">Sign in</a>
+                <a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/registration}">Sign in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/login}">Log in</a>
+                <a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/login}">Log in</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/url-shortener/list}">My account</a>
@@ -69,7 +68,7 @@ font-weight: bold;
         <h1 class="mt-4 mb text-center">URL Shortener</h1>
         <p class="text-center">Shorten your long URLs with ease!</p>
         <div class="card shadow p-3 mb-5 bg-white rounded">
-            <form id="urlShortenerForm" class="mb-3" th:action="@{/url-shortener/reklama}" method="POST">
+            <form id="urlShortenerForm" class="mb-3" th:action="@{/url-shortener-main/ad}" method="POST">
                 <div class="mb-3">
                     <label for="shortUrl" class="form-label visually-hidden">Enter your URL:</label>
                     <input type="text" class="form-control" id="shortUrl" name="shortUrl"
@@ -78,17 +77,17 @@ font-weight: bold;
                 <span class="error_message">
                     <p th:if="${errorShortUrl}" th:text="${errorShortUrl}"></p>
                 </span>
-                <button class="btn btn-outline-secondary btn-lg" type="submit">Go it</button>
+                <button class="btn btn-outline-secondary btn-lg black-button" type="submit" style="background-color: black; color: white;">Go it</button>
             </form>
         </div>
-        <p class="text-center">Want more out of your link shortener? Edit and track existing short URLs for better
+        <p  sec:authorize="isAnonymous()" class="text-center">Want more out of your link shortener? Edit and track existing short URLs for better
             management, track link analytics. </p>
     </div>
 
-    <div class="mb-3 text-center">
-        <a href="login.html" class="btn btn-outline-secondary btn-lg">Create an account</a>
+    <div sec:authorize="isAnonymous()" class="mb-3 text-center" >
+        <a th:href="@{/registration}" class="btn btn-outline-secondary btn-lg">Create an account</a>
     </div>
-    <p class="text-center">Already have an account? <a th:href="@{/url-shortener/login}">Log in</a></p>
+    <p sec:authorize="isAnonymous()" class="text-center">Already have an account? <a th:href="@{/login}">Log in</a></p>
     </div>
 </main>
 

@@ -26,6 +26,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationCookieFilter jwtAuthCookieFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,21 +34,29 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-                .authenticationProvider(authenticationProvider()).addFilterBefore(
-                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthCookieFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**"),
-                                AntPathRequestMatcher.antMatcher("/url-shortener/**"),
-                                AntPathRequestMatcher.antMatcher("/h2-console/**"),
+                        .requestMatchers(
+                                AntPathRequestMatcher.antMatcher("/swagger/**"),
                                 AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
                                 AntPathRequestMatcher.antMatcher("/v3/**"),
-                                AntPathRequestMatcher.antMatcher("/index.html"))
+                                AntPathRequestMatcher.antMatcher("/index.html"),
+                                AntPathRequestMatcher.antMatcher("/api/v1/auth/**"),
+                                AntPathRequestMatcher.antMatcher("/url-shortener-main/**"),
+                                AntPathRequestMatcher.antMatcher("/login/**"),
+                                AntPathRequestMatcher.antMatcher("/registration/**"),
+                                AntPathRequestMatcher.antMatcher("/h2-console/**"))
                         .permitAll()
                         .anyRequest().authenticated())
+
+                .logout((logout) -> logout.deleteCookies("token")
+                        .logoutUrl("/logout"))
+
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         return http.build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

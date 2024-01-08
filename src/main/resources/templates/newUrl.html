@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>New URL</title>
@@ -32,7 +32,7 @@ font-weight: bold;
 
 </style>
 <header class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand ms-2" th:href="@{/url-shortener}">URL Shortener</a>
+    <a class="navbar-brand ms-2" th:href="@{/url-shortener-main}">URL Shortener</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -50,17 +50,12 @@ font-weight: bold;
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/url-shortener}">Main</a>
+                <a class="nav-link" th:href="@{/url-shortener-main}">Main</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/registration}">Log out</a>
+                <a sec:autorize="isAuthorized()" class="nav-link" th:href="@{/logout}">Log out</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/registration}">Sign in</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/login}">Log in</a>
-            </li>
+           </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/url-shortener/list}">My account</a>
             </li>
@@ -70,7 +65,7 @@ font-weight: bold;
 
 
 <main class="container mt-5">
-    <h1>Hello, [User Name]!</h1>
+    <h1>Hello, <strong th:text="${username}"></strong>!</h1>
     <h3>Create new short URL</h3>
     <form th:action="@{/url-shortener/create}" method="POST">
         <textarea type="text" class="form-control" placeholder="Enter long URL" name="fullUrl" id="fullUrl"></textarea>

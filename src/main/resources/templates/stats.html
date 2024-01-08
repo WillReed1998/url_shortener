@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Stats</title>
@@ -87,7 +87,7 @@ margin-bottom:20px;
 
 </style>
 <header class="fixed-top navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand ms-2" th:href="@{/url-shortener}">URL Shortener</a>
+    <a class="navbar-brand ms-2" th:href="@{/url-shortener-main}">URL Shortener</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -105,16 +105,16 @@ margin-bottom:20px;
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/url-shortener}">Main</a>
+                <a class="nav-link" th:href="@{/url-shortener-main}">Main</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/registration}">Log out</a>
+                <a sec:autorize="isAuthorized()" class="nav-link" th:href="@{/logout}">Log out</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/registration}">Sign in</a>
+                <a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/registration}">Sign in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/url-shortener/login}">Log in</a>
+                <a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/login}">Log in</a>
             </li>
         </ul>
     </div>
@@ -122,7 +122,9 @@ margin-bottom:20px;
 
 
 <main class="container" style="margin-bottom: 100px; margin-top: 100px;">
-    <h3>[User Name], here are your URL statistics</h3>
+    <h3>
+        Hello, <strong th:text="${username}"></strong>, here is your URL statistics
+    </h3>
     <table class="table table-striped shadow">
         <thead>
         <tr>
@@ -147,8 +149,6 @@ margin-bottom:20px;
             <td th:text="${#strings.substring(url.endAt,0,10)}" style="width: 100px;"></td>
             <td th:text="${url.clickCount}" style="width: 100px;"></td>
             <td>
-                <!--                <form action="@{/url-shortener/checked}" method="POST">-->
-                <!--                </form>-->
                 <form th:action="@{/url-shortener/checked}" method="POST">
                     <input type="hidden" name="id" th:value="${url.id}"/>
                     <label class="toggle">
@@ -157,7 +157,6 @@ margin-bottom:20px;
                     </label>
                 </form>
             </td>
-
             <td>
                 <form th:action="@{/url-shortener/edit}" method="GET">
                     <input type="hidden" name="id" th:value="${url.id}"/>

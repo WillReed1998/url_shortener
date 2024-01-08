@@ -5,6 +5,7 @@ import cc.worldmandia.url.request.EnableUrlRequest;
 import cc.worldmandia.url.request.UpdateUrlRequest;
 import cc.worldmandia.url.response.*;
 import cc.worldmandia.web.UrlServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.Principal;
 
+@Tag(name = "Main methods")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/url_shortener")

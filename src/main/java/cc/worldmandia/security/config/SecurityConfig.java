@@ -38,7 +38,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**"),
                                 AntPathRequestMatcher.antMatcher("/url-shortener/**"),
-                                AntPathRequestMatcher.antMatcher("/h2-console/**"))
+                                AntPathRequestMatcher.antMatcher("/h2-console/**"),
+                                AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
+                                AntPathRequestMatcher.antMatcher("/v3/**"),
+                                AntPathRequestMatcher.antMatcher("/index.html"))
                         .permitAll()
                         .anyRequest().authenticated())
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));

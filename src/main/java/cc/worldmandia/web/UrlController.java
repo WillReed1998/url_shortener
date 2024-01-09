@@ -1,14 +1,9 @@
 package cc.worldmandia.web;
 
 import cc.worldmandia.security.auth.AuthenticationServiceImpl;
-import cc.worldmandia.security.auth.request.LogInRequest;
-import cc.worldmandia.security.auth.request.SignUpRequest;
-import cc.worldmandia.security.auth.response.JwtAuthenticationResponse;
 import cc.worldmandia.url.Url;
-import cc.worldmandia.user.UserRegisterDto;
 import cc.worldmandia.user.UserServiceImpl;
 import cc.worldmandia.util.UrlValidator;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

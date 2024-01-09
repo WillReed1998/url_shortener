@@ -84,7 +84,6 @@ class UrlServiceImplTest {
 
     @Test
     void testFindById_NotFound() {
-//        Url url = new Url();
         long invalidId = 1L;
 
         when(urlRepository.findById(invalidId)).thenReturn(Optional.empty());
@@ -297,7 +296,6 @@ class UrlServiceImplTest {
 
     @Test
     void testGetFullUrl_ValidAndEnabled() {
-        // Arrange
         String shortUrl = "abc123";
         Url existingUrl = Url.builder()
                 .id(1L)
@@ -312,35 +310,27 @@ class UrlServiceImplTest {
         when(urlRepository.findByShortUrl(shortUrl)).thenReturn(existingUrl);
         doNothing().when(urlRepository).incrementClickCountById(existingUrl.getId());
 
-        // Act
         RedirectView resultView = urlService.getFullUrl(shortUrl);
 
-         //Assert
         assertNotNull(resultView);
         assertEquals(existingUrl.getFullUrl(), resultView.getUrl());
         assertEquals(2, existingUrl.getClickCount());
 
-        // Verify that findByShortUrl and incrementClickCountById methods were called with the correct shortUrl and id
         verify(urlRepository).findByShortUrl(shortUrl);
         verify(urlRepository).incrementClickCountById(existingUrl.getId());
     }
 
     @Test
     void testGetFullUrl_InvalidOrDisabled() {
-        // Arrange
         String shortUrl = "invalidShortUrl";
         when(urlRepository.findByShortUrl(shortUrl)).thenReturn(null);
 
-        // Act
         RedirectView resultView = urlService.getFullUrl(shortUrl);
 
-        // Assert
         assertNotNull(resultView);
         assertEquals("/error", resultView.getUrl());
 
-        // Verify that findByShortUrl method was called with the correct shortUrl
         verify(urlRepository).findByShortUrl(shortUrl);
-        // Verify that incrementClickCountById was not called (since the URL is invalid or disabled)
         verify(urlRepository, never()).incrementClickCountById(anyLong());
     }
 }

@@ -23,7 +23,7 @@ public class MainController {
     @PostMapping("/ad")
     public String getAd(@RequestParam("shortUrl") String shortUrl) {
         timeUrl = shortUrl;
-        return "ad";
+        return "ad.html";
     }
 
     @PostMapping("/goToUrl")

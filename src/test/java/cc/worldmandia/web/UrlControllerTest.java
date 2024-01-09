@@ -35,7 +35,7 @@ class UrlControllerTest {
     private static final String INVALID_URL = "Invalid URL. Enter correct URL please.";
 
     @Test
-    void getUrlList() throws Exception {
+    void testGetUrlList() throws Exception {
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(urlController).build();
 
         Principal principal = () -> "test@example.com";

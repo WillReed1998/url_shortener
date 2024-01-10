@@ -67,13 +67,19 @@ public class UrlRestService {
     public GetUserUrlResponse getUserUrl(String email, Long id){
         Optional<User> user = userRepository.findByEmail(email);
 
+        Optional<Url> urlOptional = urlRepository.findById(id);
+
+        if (urlOptional.isEmpty()) {
+            return GetUserUrlResponse.failed(GetUserUrlResponse.Error.invalidUrlId);
+        }
+
         if (user.isPresent()){
             List<Url> urls = urlRepository.getUserUrls(user.get().getId());
             Url url = urls.stream().filter(url1 -> url1.getId().equals(id)).toList().get(0);
             return GetUserUrlResponse.success(url);
         }
 
-        return GetUserUrlResponse.failed();
+        return GetUserUrlResponse.failed(GetUserUrlResponse.Error.failed);
     }
 
     public EnableUrlResponse changeEnable(String email, EnableUrlRequest request){

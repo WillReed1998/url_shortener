@@ -8,19 +8,20 @@ import lombok.Data;
 @Builder
 public class GetUserUrlResponse {
 
-    private GetUserUrlsResponse.Error error;
+    private Error error;
     private Url userUrl;
 
     public enum Error {
         ok,
-        failed
+        failed,
+        invalidUrlId
     }
 
     public static GetUserUrlResponse success(Url userUrl){
-        return builder().error(GetUserUrlsResponse.Error.ok).userUrl(userUrl).build();
+        return builder().error(Error.ok).userUrl(userUrl).build();
     }
 
-    public static GetUserUrlResponse failed(){
-        return builder().error(GetUserUrlsResponse.Error.failed).userUrl(null).build();
+    public static GetUserUrlResponse failed(Error error){
+        return builder().error(error).userUrl(null).build();
     }
 }

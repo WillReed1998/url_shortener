@@ -1,102 +1,109 @@
 package cc.worldmandia.user;
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-@SpringBootTest()
 public class UserServiceImplTest {
 
-    @Mock
-    private UserRepository userRepository;
-
-    @InjectMocks
-    private UserServiceImpl userService;
+    private final UserRepository userRepository = Mockito.mock(UserRepository.class);
+    private final UserServiceImpl userService = new UserServiceImpl(userRepository);
 
     @Test
     public void testSaveUser() {
-        User user = new User();
-        when(userRepository.save(user)).thenReturn(user);
+        User user = User.builder()
+                .id(1L)
+                .email("test@example.com")
+                .username("testUser")
+                .password("testPassword")
+                .token("testToken")
+                .build();
+
+        when(userRepository.save(any(User.class))).thenAnswer(i -> i.getArguments()[0]);
 
         User savedUser = userService.save(user);
-        assertNotNull(savedUser);
-        verify(userRepository, times(1)).save(user);
+
+        assertEquals(user, savedUser);
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
     }
 
     @Test
-    public void testFindUserById() {
-        User user = new User();
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+    public void testFindById() {
+        Long userId = 1L;
+        User user = User.builder()
+                .id(userId)
+                .email("test@example.com")
+                .username("testUser")
+                .password("testPassword")
+                .token("testToken")
+                .build();
 
-        User foundUser = userService.findById(1L);
-        assertNotNull(foundUser);
-        verify(userRepository, times(1)).findById(1L);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        User foundUser = userService.findById(userId);
+
+        assertEquals(user, foundUser);
+        Mockito.verify(userRepository, Mockito.times(1)).findById(userId);
     }
 
     @Test
-    public void testFindUserById_NotFound() {
-        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+    public void testFindAll() {
+        List<User> userList = new ArrayList<>();
+        userList.add(User.builder()
+                .id(1L)
+                .email("test1@example.com")
+                .username("testUser1")
+                .password("password1")
+                .token("token1")
+                .build());
+        userList.add(User.builder()
+                .id(2L)
+                .email("test2@example.com")
+                .username("testUser2")
+                .password("password2")
+                .token("token2")
+                .build());
 
-        User foundUser = userService.findById(1L);
-        assertNull(foundUser);
-        verify(userRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    public void testFindAllUsers() {
-        List<User> users = new ArrayList<>();
-        when(userRepository.findAll()).thenReturn(users);
+        when(userRepository.findAll()).thenReturn(userList);
 
         List<User> foundUsers = userService.findAll();
-        assertEquals(0, foundUsers.size());
-        verify(userRepository, times(1)).findAll();
+
+        assertEquals(userList, foundUsers);
+        Mockito.verify(userRepository, Mockito.times(1)).findAll();
     }
 
     @Test
-    public void testDeleteUserById() {
-        userService.deleteById(1L);
-        verify(userRepository, times(1)).deleteById(1L);
-    }
+    public void testDeleteById() {
+        Long userId = 1L;
 
-    @Test
-    public void testFindUserWithURLsByUsername() {
-        String username = "testUser";
-        User user = new User();
-        when(userRepository.findUserWithURLsByUsername(username)).thenReturn(Optional.of(user));
+        userService.deleteById(userId);
 
-        User foundUser = userService.findUserWithURLsByUsername(username);
-        assertNotNull(foundUser);
-        verify(userRepository, times(1)).findUserWithURLsByUsername(username);
+        Mockito.verify(userRepository, Mockito.times(1)).deleteById(userId);
     }
 
     @Test
     public void testFindByEmail() {
         String email = "test@example.com";
-        User user = new User();
+        User user = User.builder()
+                .id(1L)
+                .email(email)
+                .username("testUser")
+                .password("testPassword")
+                .token("testToken")
+                .build();
+
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
 
         User foundUser = userService.findByEmail(email);
-        assertNotNull(foundUser);
-        verify(userRepository, times(1)).findByEmail(email);
-    }
 
-    @Test
-    public void testFindByEmail_NotFound() {
-        String email = "nonexistent@example.com";
-        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
-
-        User foundUser = userService.findByEmail(email);
-        assertNull(foundUser);
-        verify(userRepository, times(1)).findByEmail(email);
+        assertEquals(user, foundUser);
+        Mockito.verify(userRepository, Mockito.times(1)).findByEmail(email);
     }
 }

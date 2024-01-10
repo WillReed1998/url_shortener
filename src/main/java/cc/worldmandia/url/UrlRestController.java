@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -21,6 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.Principal;
+import java.util.Optional;
 
 @Tag(name = "Main methods")
 @RestController
@@ -30,6 +32,7 @@ public class UrlRestController {
 
     private final UrlRestService service;
     private final UrlServiceImpl urlService;
+    private final UrlRepository repository;
 
     @Operation(
             summary = "Create a shortened URL",

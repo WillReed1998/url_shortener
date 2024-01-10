@@ -18,7 +18,7 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
     @Query("SELECT u FROM Url u WHERE u.shortUrl = :shortURL")
     Optional<Url> findURLWithUsersByShortURL(@Param("shortURL") String shortURL);
 
-    Url findByFullUrl(String fullUrl);
+ //   Url findByFullUrl(String fullUrl);
 
     Url findByShortUrl(String shortUrl);
 

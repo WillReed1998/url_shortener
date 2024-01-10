@@ -37,9 +37,7 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthCookieFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers(
-                                AntPathRequestMatcher.antMatcher("/swagger/**"),
+                .authorizeHttpRequests(request -> request.requestMatchers(
                                 AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
                                 AntPathRequestMatcher.antMatcher("/v3/**"),
                                 AntPathRequestMatcher.antMatcher("/index.html"),
@@ -50,7 +48,6 @@ public class SecurityConfig {
                                 AntPathRequestMatcher.antMatcher("/h2-console/**"))
                         .permitAll()
                         .anyRequest().authenticated())
-
                 .logout((logout) -> logout.deleteCookies("token")
                         .logoutUrl("/logout"))
 

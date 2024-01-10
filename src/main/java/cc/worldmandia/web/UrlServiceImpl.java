@@ -6,6 +6,7 @@ import cc.worldmandia.util.UrlShortener.ShortUrlUtil;
 import cc.worldmandia.url.Url;
 import cc.worldmandia.url.UrlRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -14,27 +15,28 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class UrlServiceImpl{
+public class UrlServiceImpl {
 
     private final UrlRepository urlRepository;
     private final ShortUrlUtil shortUrlUtil;
     private final UserServiceImpl userService;
 
     public void createUrl(Url newUrl, String email) {
-            newUrl.setShortUrl("http://url-shortener/" + shortUrlUtil.generateUniqueKey());
-            newUrl.setEnabled(true);
-            User foundUser = userService.findByEmail(email);
-            newUrl.setUser(foundUser);
-            urlRepository.save(newUrl);
+        newUrl.setShortUrl("http://url-shortener/" + shortUrlUtil.generateUniqueKey());
+        newUrl.setEnabled(true);
+        User foundUser = userService.findByEmail(email);
+        newUrl.setUser(foundUser);
+        urlRepository.save(newUrl);
     }
 
-    public boolean exists(long id){
-        if (id == 0){
+    public boolean exists(long id) {
+        if (id == 0) {
             return false;
         }
         return urlRepository.existsById(id);
     }
 
+    @Cacheable(value = "urlCache")
     public Url findById(Long id) {
         exists(id);
         return urlRepository.findById(id).orElse(null);
@@ -52,13 +54,16 @@ public class UrlServiceImpl{
     public List<Url> findAll() {
         return urlRepository.findAll();
     }
+
     public List<Url> findAllByUser(User user) {
         return urlRepository.findAllByUser(user);
     }
+
     public void deleteById(Long id) {
         urlRepository.deleteById(id);
     }
 
+    @Cacheable(value = "urlCache")
     public Url findURLWithUsersByShortURL(String shortURL) {
         return urlRepository.findURLWithUsersByShortURL(shortURL).orElse(null);
     }
@@ -78,7 +83,7 @@ public class UrlServiceImpl{
         return urlRepository.save(foundUrl);
     }
 
-    public Url prolongEndDate(Url url){
+    public Url prolongEndDate(Url url) {
         long id = url.getId();
         Url foundUrl = findById(id);
         LocalDateTime prolongDate = foundUrl.getEndAt().plusDays(15);

@@ -13,7 +13,7 @@ class GetUserUrlResponseTest {
 
         GetUserUrlResponse getUserUrlResponse = GetUserUrlResponse.success(userUrl);
 
-        assertEquals(GetUserUrlsResponse.Error.ok, getUserUrlResponse.getError());
+        assertEquals(GetUserUrlResponse.Error.ok, getUserUrlResponse.getError());
         assertNotNull(getUserUrlResponse.getUserUrl());
     }
 

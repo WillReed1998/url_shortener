@@ -37,7 +37,7 @@ class UrlRepositoryTest {
 
     @Test
     void testFindURLWithUsersByShortURLCorrect() {
-        User user = User.builder().id(5L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
+        User user = User.builder().id(155L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
         userRepository.save(user);
 
         Url url1 = Url.builder().user(user).fullUrl("https://www.baeldung.com/spring-boot-testing").shortUrl("Rd5wCq").build();
@@ -49,7 +49,7 @@ class UrlRepositoryTest {
 
     @Test
     void testFindURLWithUsersByShortURLIncorrect() {
-        User user = User.builder().id(5L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
+        User user = User.builder().id(155L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
         userRepository.save(user);
 
         Url url1 = Url.builder().user(user).fullUrl("https://www.baeldung.com/spring-boot-testing").shortUrl("Rd5wCq").build();
@@ -61,7 +61,7 @@ class UrlRepositoryTest {
 
     @Test
     void testFindByShortUrlCorrect() {
-        User user = User.builder().id(5L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
+        User user = User.builder().id(155L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
         userRepository.save(user);
 
         Url url1 = Url.builder().user(user).fullUrl("https://www.baeldung.com/spring-boot-testing").shortUrl("Rd5wCq").build();
@@ -73,7 +73,7 @@ class UrlRepositoryTest {
 
     @Test
     void testFindByShortUrlIncorrect() {
-        User user = User.builder().id(5L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
+        User user = User.builder().id(155L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
         userRepository.save(user);
 
         Url url1 = Url.builder().user(user).fullUrl("https://www.baeldung.com/spring-boot-testing").shortUrl("Rd5wCq").build();
@@ -85,7 +85,7 @@ class UrlRepositoryTest {
 
     @Test
     void testGetUserUrlsCorrect() {
-        User user = User.builder().id(5L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
+        User user = User.builder().id(155L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
         userRepository.save(user);
 
         Url url1 = Url.builder().fullUrl("https://www.baeldung.com/spring-boot-testing").shortUrl("Rd5wCq").user(user).build();
@@ -104,7 +104,7 @@ class UrlRepositoryTest {
 
     @Test
     void testGetUserUrlsIncorrect() {
-        User user = User.builder().id(5L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
+        User user = User.builder().id(155L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
         userRepository.save(user);
 
         Url url1 = Url.builder().fullUrl("https://www.baeldung.com/spring-boot-testing").shortUrl("Rd5wCq").user(user).build();
@@ -123,7 +123,7 @@ class UrlRepositoryTest {
 
     @Test
     void testIncrementClickCountByIdIncorrect() {
-        User user = User.builder().id(5L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
+        User user = User.builder().id(155L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
         userRepository.save(user);
 
         Url url1 = Url.builder().user(user).fullUrl("https://www.baeldung.com/spring-boot-testing").shortUrl("Rd5wCq").build();
@@ -137,7 +137,7 @@ class UrlRepositoryTest {
 
     @Test
     void testIncrementClickCountByIdCorrect() {
-        User user = User.builder().id(5L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
+        User user = User.builder().id(155L).email("aaa@gmail.com").username("aaa").password("Paaaaaaa1").build();
         userRepository.save(user);
 
         Url url1 = Url.builder().user(user).fullUrl("https://www.baeldung.com/spring-boot-testing").shortUrl("Rd5wCq").build();

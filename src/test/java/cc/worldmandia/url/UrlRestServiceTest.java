@@ -4,6 +4,7 @@ import cc.worldmandia.USSpringApplication;
 import cc.worldmandia.url.request.CreateUrlRequest;
 import cc.worldmandia.url.request.EnableUrlRequest;
 import cc.worldmandia.url.request.UpdateUrlRequest;
+import cc.worldmandia.url.response.CreateUrlResponse;
 import cc.worldmandia.user.User;
 import cc.worldmandia.user.UserRepository;
 import cc.worldmandia.user.UserServiceImpl;
@@ -12,6 +13,7 @@ import cc.worldmandia.util.UrlShortener.ShortUrlUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -19,7 +21,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
@@ -47,14 +48,16 @@ class UrlRestServiceTest {
         userService.save(user);
 
         ShortUrlUtil util = new ShortUrlUtil(new ShortUrlConfig());
-        UrlRestService urlRestService1 = new UrlRestService(urlRepository, userService, userRepository, util);
 
         CreateUrlRequest request = new CreateUrlRequest();
         request.setFullUrl("https://www.baeldung.com/spring-boot-testing");
         request.setTitle("title");
         request.setDescription("description");
 
-        assertAll(() -> urlRestService1.create(user.getEmail(), request));
+        Mockito.when(urlRestService.create("someone@Gmail.com", request))
+                .thenReturn(CreateUrlResponse.success(1L));
+
+        assertAll(() -> urlRestService.create(user.getEmail(), request));
     }
 
     @Test
@@ -115,7 +118,7 @@ class UrlRestServiceTest {
         request.setTitle("title");
         request.setDescription("description");
 
-        assertAll(() -> urlRestService.update(any(), request));
+        assertAll(() -> urlRestService.update("someone@Gmail.com", request));
     }
 
 

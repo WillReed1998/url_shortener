@@ -13,13 +13,11 @@ import cc.worldmandia.util.UrlShortener.ShortUrlUtil;
 import cc.worldmandia.web.UrlServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -32,8 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-
-@WebMvcTest(controllers = UrlRestController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(SpringExtension.class)
 class UrlRestControllerTest {
@@ -59,26 +56,19 @@ class UrlRestControllerTest {
     private UrlRestController controller;
 
     @Test
-    void testCreate(){
-        User user = User
-                .builder()
-                .id(2L)
-                .email("someone@Gmail.com")
-                .username("aqaqa")
-                .build();
-        userService.save(user);
+    void testCreate() {
 
         Principal principal = () -> "someone@Gmail.com";
 
         ShortUrlUtil util = new ShortUrlUtil(new ShortUrlConfig());
-        UrlRestService urlRestService1 = new UrlRestService(urlRepository, userService , userRepository, util);
 
         CreateUrlRequest request = new CreateUrlRequest();
         request.setFullUrl("https://www.baeldung.com/spring-boot-testing");
         request.setTitle("title");
         request.setDescription("description");
 
-        Mockito.when(urlRestService1.create(user.getEmail(), request)).thenReturn(CreateUrlResponse.success(1L));
+        Mockito.when(urlRestService.create("someone@Gmail.com", request))
+                .thenReturn(CreateUrlResponse.success(1L));
 
         assertAll(() -> controller.create(principal, request));
     }
@@ -152,7 +142,7 @@ class UrlRestControllerTest {
         request.setDescription("description");
 
         ShortUrlUtil util = new ShortUrlUtil(new ShortUrlConfig());
-        UrlRestService urlRestService1 = new UrlRestService(urlRepository, userService , userRepository, util);
+        UrlRestService urlRestService1 = new UrlRestService(urlRepository, userService, userRepository, util);
 
         assertAll(() -> controller.updateUrl(principal, request));
     }

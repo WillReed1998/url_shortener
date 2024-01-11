@@ -28,7 +28,7 @@ public class RegistrationController {
     public String redirectToRegistrationForm(Model model) {
         UserRegisterDto userRegisterDto = new UserRegisterDto();
         model.addAttribute(userRegisterDto);
-        return "/registration";
+        return "/registration.html";
     }
 
     @PostMapping("/registration")
@@ -43,7 +43,7 @@ public class RegistrationController {
         if (!userRegisterDto.getPassword().equals(userRegisterDto.getRepeatedPassword())) {
             model.addAttribute("userRegisterDto", userRegisterDto);
             model.addAttribute("statusCode", response.getMessage());
-            return "/registration";
+            return "/registration.html";
         }
         if (response.getStatus() == 200) {
             model.addAttribute("user", userRegisterDto);
@@ -52,14 +52,14 @@ public class RegistrationController {
 
         model.addAttribute("statusCode", response.getMessage());
         model.addAttribute("userRegisterDto", userRegisterDto);
-        return "/registration";
+        return "/registration.html";
     }
 
     @GetMapping("/login")
     public String redirectToLoginForm(Model model) {
         UserRegisterDto userRegisterDto = new UserRegisterDto();
         model.addAttribute(userRegisterDto);
-        return "/login";
+        return "/login.html";
     }
 
     @PostMapping("/login")
@@ -76,7 +76,7 @@ public class RegistrationController {
         }
         model.addAttribute("statusCode", response.getMessage());
         model.addAttribute("userRegisterDto", userRegisterDto);
-        return "login";
+        return "login.html";
     }
     @GetMapping ("/logout")
     public String logout (){

@@ -20,7 +20,7 @@ public class ServerCustomizer {
     private static class ServerCustomizerProd implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
         @Override
         public void customize(ConfigurableWebServerFactory factory) {
-            factory.setPort(9090);
+            factory.setPort(9999);
         }
     }
 }

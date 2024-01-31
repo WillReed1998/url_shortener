@@ -9,6 +9,6 @@ ENV DB_URL=jdbc:postgresql://db:5432/appdb
 
 COPY build/libs/url_shortener-0.0.1.jar /opt/app.jar
 
-EXPOSE 9090
+EXPOSE 9999
 
 CMD ["java", "-jar", "/opt/app.jar"]
